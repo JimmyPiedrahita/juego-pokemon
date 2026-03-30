@@ -14,6 +14,7 @@ public class Pokemon {
     private int defensa;
     private int velocidad;
     private boolean debilitado;
+    private boolean capturado = false;
 
     private List<String> movimientos;
 
@@ -128,7 +129,19 @@ public class Pokemon {
         return hpActual;
     }
 
+    public int getHpMaximo() {
+        return hpMaximo;
+    }
+
     public String getTipo() {
         return tipo;
+    }
+
+    public boolean isCapturado() {
+        return capturado;
+    }
+
+    public void setCapturado(boolean capturado) {
+        this.capturado = capturado;
     }
 }

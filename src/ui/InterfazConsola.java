@@ -107,6 +107,12 @@ public class InterfazConsola {
             // Delegacion estricta al arbitro
             motor.ejecutarTurno(jugador, activoJugador, accion, rival, activoRival);
 
+            if (activoRival.isCapturado()) {
+                jugador.agregarPokemon(activoRival);
+                activoRival.curar(999);
+                break;
+            }
+
             // Relevos
             if (activoJugador.isDebilitado()) {
                 activoJugador = obtenerSiguientePokemonApto(jugador);
