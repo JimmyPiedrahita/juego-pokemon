@@ -1,5 +1,8 @@
 package items.domain;
 
-public interface Objeto {
+import core.Pokemon;
 
+public interface Objeto {
+    void usar(Pokemon pokemon);
+    String getNombre();
 }
