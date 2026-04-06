@@ -1,0 +1,128 @@
+{
+  "pokemon": [
+    {
+      "especieBase": "Charmander",
+      "tipo": "Fuego",
+      "estadisticasBase": {
+        "hpMaximo": 39, "ataque": 52, "defensa": 43, "velocidad": 65
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Charmeleon", "nivelRequerido": 15 },
+        { "nombreEvolucion": "Charizard", "nivelRequerido": 25 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Arañazo", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 4, "movimiento": { "nombre": "Ascuas", "poder": 40, "tipo": "Fuego" } }
+      ]
+    },
+    {
+      "especieBase": "Squirtle",
+      "tipo": "Agua",
+      "estadisticasBase": {
+        "hpMaximo": 44, "ataque": 48, "defensa": 65, "velocidad": 43
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Wartortle", "nivelRequerido": 15 },
+        { "nombreEvolucion": "Blastoise", "nivelRequerido": 25 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Placaje", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 4, "movimiento": { "nombre": "Pistola Agua", "poder": 40, "tipo": "Agua" } }
+      ]
+    },
+    {
+      "especieBase": "Bulbasaur",
+      "tipo": "Planta",
+      "estadisticasBase": {
+        "hpMaximo": 45, "ataque": 49, "defensa": 49, "velocidad": 45
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Ivysaur", "nivelRequerido": 15 },
+        { "nombreEvolucion": "Venusaur", "nivelRequerido": 25 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Placaje", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 4, "movimiento": { "nombre": "Látigo Cepa", "poder": 45, "tipo": "Planta" } }
+      ]
+    },
+    {
+      "especieBase": "Cyndaquil",
+      "tipo": "Fuego",
+      "estadisticasBase": {
+        "hpMaximo": 39,
+        "ataque": 52,
+        "defensa": 43,
+        "velocidad": 65
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Quilava", "nivelRequerido": 14 },
+        { "nombreEvolucion": "Typhlosion", "nivelRequerido": 36 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Placaje", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 6, "movimiento": { "nombre": "Ascuas", "poder": 40, "tipo": "Fuego" } }
+      ]
+    },
+    {
+      "especieBase": "Totodile",
+      "tipo": "Agua",
+      "estadisticasBase": {
+        "hpMaximo": 50,
+        "ataque": 65,
+        "defensa": 64,
+        "velocidad": 43
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Croconaw", "nivelRequerido": 18 },
+        { "nombreEvolucion": "Feraligatr", "nivelRequerido": 30 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Arañazo", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 6, "movimiento": { "nombre": "Pistola Agua", "poder": 40, "tipo": "Agua" } }
+      ]
+    },
+    {
+      "especieBase": "Chikorita",
+      "tipo": "Planta",
+      "estadisticasBase": {
+        "hpMaximo": 45,
+        "ataque": 49,
+        "defensa": 65,
+        "velocidad": 45
+      },
+      "evoluciones": [
+        { "nombreEvolucion": "Bayleef", "nivelRequerido": 16 },
+        { "nombreEvolucion": "Meganium", "nivelRequerido": 32 }
+      ],
+      "movimientosDisponibles": [
+        { "nivelRequerido": 1, "movimiento": { "nombre": "Placaje", "poder": 40, "tipo": "Normal" } },
+        { "nivelRequerido": 6, "movimiento": { "nombre": "Hoja Afilada", "poder": 55, "tipo": "Planta" } }
+      ]
+    
+    }
+    ]
+    ,
+    "objetos": [
+  {
+    "nombre": "Pocion",
+    "tipo": "Curacion",
+    "puntosCuracion": 20,
+    "revivir": false,
+    "descripcion": "Cura 20 HP"
+  },
+  {
+    "nombre": "Revivir",
+    "tipo": "Curacion",
+    "puntosCuracion": 0,
+    "revivir": true,
+    "descripcion": "Revive a un Pokemon"
+  },
+  {
+    "nombre": "Pokeball",
+    "tipo": "Captura",
+    "ratio": 1.0,
+    "descripcion": "Atrapa Pokemon"
+  }
+]
+
+}
