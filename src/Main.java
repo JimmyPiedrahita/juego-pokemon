@@ -1,9 +1,6 @@
 import java.util.Scanner;
 import core.Entrenador;
-import core.Pokemon;
-import items.factory.FabricaPociones;
 import items.factory.FabricaPokeball;
-import items.factory.FabricaRevivir;
 import ui.InterfazConsola;
 
 public class Main {
@@ -16,10 +13,7 @@ public class Main {
         String nombre = scanner.nextLine();
 
         // 1. Configuracion inicial del estado del juego
-        // Damos 200 de dinero inicial, suficiente para al menos una pokeball
         Entrenador jugador = new Entrenador(nombre, 200);
-        Pokemon inicial = new Pokemon("Charmander", "Fuego", 5, 20, 10, 8, 12);
-        jugador.agregarPokemon(inicial);
 
         FabricaPokeball fPokeball = new FabricaPokeball();
 
@@ -31,5 +25,6 @@ public class Main {
         // 2. Inyeccion y arranque de la interfaz
         InterfazConsola ui = new InterfazConsola();
         ui.iniciarJuego(jugador);
+        scanner.close();
     }
 }
