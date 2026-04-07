@@ -25,14 +25,8 @@ public class InterfazConsola {
         System.out.println("\nEntrenador " + jugador.getNombre() + " listo para la aventura.");
 
         while (jugando) {
-            System.out.println("\n--- MENU PRINCIPAL ---");
-            System.out.println("1. Ver mi Equipo");
-            System.out.println("2. Buscar Batalla");
-            System.out.println("3. Ir al Centro Pokemon");
-            System.out.println("4. Ir a la Tienda");
-            System.out.println("5. Explorar la Zona");
-            System.out.println("6. Salir del Juego");
-            System.out.print("Elige una opcion: ");
+            System.out.println("\n[ MENU PRINCIPAL ] \n1. Equipo | 2. Batalla | 3. Centro Pokemon | 4. Tienda | 5. Explorar | 6. Salir");
+            System.out.print("> Elige una opcion: ");
             
             String opcion = scanner.nextLine();
             
@@ -81,13 +75,9 @@ public class InterfazConsola {
 
         // El bucle while se traslado aqui. Mantiene la batalla viva.
         while (jugador.tienePokemonVivos() && rival.tienePokemonVivos()) {
-            System.out.println("\n=== BATALLA ===");
-            System.out.println("Rival: " + activoRival.getNombre() + " [HP: " + activoRival.getHpActual() + "]");
-            System.out.println("Tu: " + activoJugador.getNombre() + " [HP: " + activoJugador.getHpActual() + "]");
-            System.out.println("1. Atacar");
-            System.out.println("2. Mochila (Usar Objeto)");
-            System.out.println("3. Cambiar Pokemon");
-            System.out.print("Que deberia hacer " + activoJugador.getNombre() + "?: ");
+            System.out.println("\n[ BATALLA ]");
+            System.out.println("Rival: " + activoRival.getNombre() + " [HP: " + activoRival.getHpActual() + "] | Tu: " + activoJugador.getNombre() + " [HP: " + activoJugador.getHpActual() + "]");
+            System.out.print("1. Atacar | 2. Mochila | 3. Cambiar Pokemon\n> Que haras?: ");
 
             String opcion = scanner.nextLine();
             int accion = 0;
@@ -169,12 +159,12 @@ public class InterfazConsola {
             return false;
         }
 
-        System.out.println("\n--- MOCHILA ---");
+        System.out.println("\n[ MOCHILA ]");
         for (int i = 0; i < jugador.getMochila().size(); i++) {
-            System.out.println((i + 1) + ". " + jugador.getMochila().get(i).getNombre());
+            System.out.print((i + 1) + ". " + jugador.getMochila().get(i).getNombre() + " | ");
         }
         System.out.println("0. Cancelar");
-        System.out.print("Elige un objeto: ");
+        System.out.print("> Elige un objeto: ");
         
         try {
             int seleccion = Integer.parseInt(scanner.nextLine());
@@ -187,14 +177,14 @@ public class InterfazConsola {
                 if (obj.getNombre().equalsIgnoreCase("Pokeball")) {
                     objetivo = activoRival;
                 } else if (obj.getNombre().equalsIgnoreCase("Pocion") || obj.getNombre().equalsIgnoreCase("Revivir")) {
-                    System.out.println("\n--- ELEGIR POKEMON PARA " + obj.getNombre().toUpperCase() + " ---");
+                    System.out.println("\n[ ELEGIR POKEMON - " + obj.getNombre().toUpperCase() + " ]");
                     for (int i = 0; i < jugador.getEquipo().size(); i++) {
                         Pokemon p = jugador.getEquipo().get(i);
-                        String estado = p.isDebilitado() ? "[DEBILITADO]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
+                        String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
                         System.out.println((i + 1) + ". " + p.getNombre() + " " + estado);
                     }
                     System.out.println("0. Cancelar");
-                    System.out.print("Elige un Pokemon: ");
+                    System.out.print("> Elige un Pokemon: ");
                     
                     int opc = Integer.parseInt(scanner.nextLine());
                     if (opc == 0) return false;
@@ -234,15 +224,15 @@ public class InterfazConsola {
     }
 
     private Pokemon rotarPokemonActivo(Entrenador jugador, Pokemon actual) {
-        System.out.println("\n--- CAMBIAR POKEMON ---");
+        System.out.println("\n[ CAMBIAR POKEMON ]");
         for (int i = 0; i < jugador.getEquipo().size(); i++) {
             Pokemon p = jugador.getEquipo().get(i);
-            String estado = p.isDebilitado() ? "[DEBILITADO]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
+            String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
             String marcaActual = (p == actual) ? " (ACTUAL)" : "";
             System.out.println((i + 1) + ". " + p.getNombre() + " " + estado + marcaActual);
         }
         System.out.println("0. Cancelar");
-        System.out.print("Elige un Pokemon: ");
+        System.out.print("> Elige un Pokemon: ");
         
         try {
             int opcion = Integer.parseInt(scanner.nextLine());
@@ -289,12 +279,11 @@ public class InterfazConsola {
             return;
         }
         
-        int costoCuracion = 50; // Precio general de la curacion
-        System.out.println("\n¡Bienvenido al Centro Pokemon!");
-        System.out.println("Curar a todo tu equipo cuesta $" + costoCuracion + " (Dinero actual: $" + entrenador.getDinero() + ").");
+        int costoCuracion = 50;
+        System.out.println("\n[ CENTRO POKEMON ] Curar equipo: $" + costoCuracion + " | Fondos: $" + entrenador.getDinero());
         
         if (entrenador.getDinero() < costoCuracion) {
-            System.out.println("Lo siento, no tienes suficiente dinero. ¡Vuelve cuando tengas mas fondos!");
+            System.out.println("> No tienes suficiente dinero.");
             return;
         }
 
@@ -314,14 +303,9 @@ public class InterfazConsola {
         FabricaRevivir fRevivir = new FabricaRevivir();
 
         while (enTienda) {
-            System.out.println("\n--- TIENDA POKEMON ---");
-            System.out.println("¡Hola! ¿En que te puedo ayudar hoy?");
-            System.out.println("Tu dinero actual: $" + jugador.getDinero());
-            System.out.println("1. Comprar Pokeball ($50)");
-            System.out.println("2. Comprar Pocion ($20)");
-            System.out.println("3. Comprar Revivir ($100)");
-            System.out.println("4. Salir de la Tienda");
-            System.out.print("Elige una opcion: ");
+            System.out.println("\n[ TIENDA POKEMON ] Fondos: $" + jugador.getDinero());
+            System.out.println("1. Pokeball ($50) | 2. Pocion ($20) | 3. Revivir ($100) | 4. Salir");
+            System.out.print("> Elige una opcion: ");
 
             String opcion = scanner.nextLine();
 
@@ -362,10 +346,9 @@ public class InterfazConsola {
 
         boolean explorando = true;
         while (explorando) {
-            System.out.println("\n--- EXPLORANDO LA ZONA ---");
-            System.out.println("1. Lanzar Pokeball");
-            System.out.println("2. Salir de explorar");
-            System.out.print("Elige una opcion: ");
+            System.out.println("\n[ EXPLORANDO ZONA ]");
+            System.out.println("1. Buscar / Lanzar Pokeball | 2. Salir");
+            System.out.print("> Elige una opcion: ");
             String opcion = scanner.nextLine();
 
             if (opcion.equals("1")) {

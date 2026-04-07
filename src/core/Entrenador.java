@@ -38,16 +38,15 @@ public class Entrenador {
     }
 
     public void mostrarEquipo() {
-        System.out.println("--- Equipo de " + this.nombre + " ---");
+        System.out.println("\n[ EQUIPO ]:");
         if (equipo.isEmpty()) {
-            System.out.println("El equipo esta vacio.");
+            System.out.println("> Vacio.");
             return;
         }
         
         for (int i = 0; i < equipo.size(); i++) {
             Pokemon p = equipo.get(i);
-            String estado = p.isDebilitado() ? "[DEBILITADO]" : "[HP: " + p.getHpActual() + "]";
-            // Nota: Asumo que creaste el metodo getNivel() en la clase Pokemon
+            String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
             System.out.println((i + 1) + ". " + p.getNombre() + " " + estado);
         }
     }

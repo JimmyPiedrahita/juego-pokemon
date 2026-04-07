@@ -8,7 +8,7 @@ public class MotorBatalla {
     public void ejecutarTurno(Entrenador jugador, Pokemon activoJugador, int accionJugador,
             Entrenador rival, Pokemon activoRival, int accionRival) {
 
-        System.out.println("\n--- RESOLUCION DEL TURNO ---");
+        System.out.println("\n[ RESOLUCION ]");
 
         // Regla de negocio: Usar objeto (2) o cambiar Pokemon (3) tiene prioridad.
         boolean atacaJugador = (accionJugador == 1);
