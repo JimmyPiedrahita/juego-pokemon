@@ -155,6 +155,8 @@ public class InterfazConsola {
 
         if (jugador.tienePokemonVivos()) {
             System.out.println("\nHas ganado la batalla!");
+            int recompensa = new Random().nextInt(100) + 50; // 50 a 149 de premio
+            jugador.ganarDinero(recompensa);
         } else {
             System.out.println("\nHas perdido. Debes ir al Centro Pokemon para curarte.");
         }
