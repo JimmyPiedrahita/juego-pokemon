@@ -45,9 +45,9 @@ public class InterfazConsola {
                         System.out.println("\n¡No tienes Pokemones o no estan en condiciones para luchar! Ve al Centro Pokemon o a explorar.");
                         break;
                     }
-                    System.out.println("\nBuscando entrenador para una batalla");
-                    Entrenador salvaje = generarEncuentroSalvaje();
-                    iniciarBatallaInteractiva(jugador, salvaje);
+                    System.out.println("\nBuscando entrenador para una batalla...");
+                    Entrenador rival = generarEntrenadorRival();
+                    iniciarBatallaInteractiva(jugador, rival);
                     break;
                 case "3":
                     curarEquipoCompleto(jugador);
@@ -97,7 +97,7 @@ public class InterfazConsola {
                     accion = 1;
                     break;
                 case "2":
-                    if (abrirMochila(jugador, activoJugador)) {
+                    if (abrirMochila(jugador, activoJugador, activoRival)) {
                         accion = 2;
                     } else {
                         continue; // Si el jugador cancela la mochila, se reinicia el menu de batalla
@@ -117,8 +117,26 @@ public class InterfazConsola {
                     continue;
             }
 
+            // IA Basica del rival
+            int accionRival = 1; // Por defecto atacar
+            Random rand = new Random();
+            if (rand.nextInt(10) < 2) { // 20% de probabilidad de cambiar
+                Pokemon posibleCambio = null;
+                for (Pokemon p : rival.getEquipo()) {
+                    if (!p.isDebilitado() && p != activoRival) {
+                        posibleCambio = p;
+                        break;
+                    }
+                }
+                if (posibleCambio != null) {
+                    System.out.println("Â¡El rival " + rival.getNombre() + " retira a " + activoRival.getNombre() + " y envÃ­a a " + posibleCambio.getNombre() + "!");
+                    activoRival = posibleCambio;
+                    accionRival = 3;
+                }
+            }
+
             // Delegacion estricta al arbitro
-            motor.ejecutarTurno(jugador, activoJugador, accion, rival, activoRival);
+            motor.ejecutarTurno(jugador, activoJugador, accion, rival, activoRival, accionRival);
 
             if (activoRival.isCapturado()) {
                 jugador.agregarPokemon(activoRival);
@@ -143,7 +161,7 @@ public class InterfazConsola {
     }
 
     // Resolucion del uso de fabrica de objetos
-    private boolean abrirMochila(Entrenador jugador, Pokemon activo) {
+    private boolean abrirMochila(Entrenador jugador, Pokemon activo, Pokemon activoRival) {
         if (jugador.getMochila().isEmpty()) {
             System.out.println("Tu mochila esta vacia.");
             return false;
@@ -161,8 +179,43 @@ public class InterfazConsola {
             if (seleccion == 0) return false;
             
             if (seleccion > 0 && seleccion <= jugador.getMochila().size()) {
-                Objeto obj = jugador.getMochila().remove(seleccion - 1);
-                obj.usar(activo); // Pasamos la referencia real, no un String
+                Objeto obj = jugador.getMochila().get(seleccion - 1);
+                Pokemon objetivo = activo;
+
+                if (obj.getNombre().equalsIgnoreCase("Pokeball")) {
+                    objetivo = activoRival;
+                } else if (obj.getNombre().equalsIgnoreCase("Pocion") || obj.getNombre().equalsIgnoreCase("Revivir")) {
+                    System.out.println("\n--- ELEGIR POKEMON PARA " + obj.getNombre().toUpperCase() + " ---");
+                    for (int i = 0; i < jugador.getEquipo().size(); i++) {
+                        Pokemon p = jugador.getEquipo().get(i);
+                        String estado = p.isDebilitado() ? "[DEBILITADO]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
+                        System.out.println((i + 1) + ". " + p.getNombre() + " " + estado);
+                    }
+                    System.out.println("0. Cancelar");
+                    System.out.print("Elige un Pokemon: ");
+                    
+                    int opc = Integer.parseInt(scanner.nextLine());
+                    if (opc == 0) return false;
+                    
+                    if (opc > 0 && opc <= jugador.getEquipo().size()) {
+                        objetivo = jugador.getEquipo().get(opc - 1);
+                        if (obj.getNombre().equalsIgnoreCase("Pocion") && objetivo.isDebilitado()) {
+                            System.out.println("No puedes usar una pocion en un Pokemon debilitado.");
+                            return false;
+                        }
+                        if (obj.getNombre().equalsIgnoreCase("Revivir") && !objetivo.isDebilitado()) {
+                            System.out.println("No puedes usar revivir en un Pokemon que no esta debilitado.");
+                            return false;
+                        }
+                    } else {
+                        System.out.println("Opcion invalida.");
+                        return false;
+                    }
+                }
+                
+                // Si la logica fue correcta, se remueve y usa
+                jugador.getMochila().remove(seleccion - 1);
+                obj.usar(objetivo);
                 return true;
             }
         } catch (NumberFormatException e) {
@@ -215,11 +268,17 @@ public class InterfazConsola {
         return actual; 
     }
 
-    private Entrenador generarEncuentroSalvaje() {
-        Entrenador entorno = new Entrenador("Pokemon Salvaje", 0);
-        Pokemon pidgey = new Pokemon("Pidgey", "Normal", 3, 15, 8, 6, 10);
-        entorno.agregarPokemon(pidgey);
-        return entorno;
+    private Entrenador generarEntrenadorRival() {
+        Random rand = new Random();
+        String[] nombresRivales = {"Gary", "Red", "Blue", "Ash", "Misty", "Brock"};
+        String nombreRival = nombresRivales[rand.nextInt(nombresRivales.length)];
+        Entrenador rival = new Entrenador(nombreRival, 0); // Sin dinero y sin objetos por defecto
+        
+        int cantidadPokemones = rand.nextInt(6) + 1; // Entre 1 y 6
+        for (int i = 0; i < cantidadPokemones; i++) {
+            rival.agregarPokemon(generarPokemonAleatorio());
+        }
+        return rival;
     }
 
     private void curarEquipoCompleto(Entrenador entrenador) {

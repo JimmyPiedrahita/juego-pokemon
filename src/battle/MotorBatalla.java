@@ -6,19 +6,32 @@ import core.Pokemon;
 public class MotorBatalla {
 
     public void ejecutarTurno(Entrenador jugador, Pokemon activoJugador, int accionJugador,
-            Entrenador rival, Pokemon activoRival) {
+            Entrenador rival, Pokemon activoRival, int accionRival) {
 
         System.out.println("\n--- RESOLUCION DEL TURNO ---");
 
         // Regla de negocio: Usar objeto (2) o cambiar Pokemon (3) tiene prioridad.
-        // Si el jugador no ataco, solo el rival ejecuta su ataque este turno.
-        if (accionJugador != 1) {
+        boolean atacaJugador = (accionJugador == 1);
+        boolean atacaRival = (accionRival == 1);
+
+        if (!atacaJugador && !atacaRival) {
+            // Ninguno ataca (ej. ambos cambian pokemon o usan objeto)
+            return;
+        }
+
+        if (!atacaJugador && atacaRival) {
             ejecutarAtaque(activoRival, activoJugador);
             verificarDebilitamiento(activoJugador, activoRival);
             return;
         }
+        
+        if (atacaJugador && !atacaRival) {
+            ejecutarAtaque(activoJugador, activoRival);
+            verificarDebilitamiento(activoRival, activoJugador);
+            return;
+        }
 
-        // Si la accion es 1, ambos atacan. Se define prioridad por velocidad.
+        // Si ambos atacan, se define prioridad por velocidad.
         if (activoJugador.getVelocidad() >= activoRival.getVelocidad()) {
             ejecutarAtaque(activoJugador, activoRival);
             if (!activoRival.isDebilitado()) {
