@@ -18,10 +18,7 @@ public class InterfazConsola {
     public void iniciarJuego(Entrenador jugador) {
         boolean jugando = true;
         
-        System.out.println("=================================");
-        System.out.println("   BIENVENIDO AL JUEGO POKEMON   ");
-        System.out.println("=================================");
-        System.out.println("Entrenador " + jugador.getNombre() + " listo para la aventura.");
+        System.out.println("\nEntrenador " + jugador.getNombre() + " listo para la aventura.");
 
         while (jugando) {
             System.out.println("\n--- MENU PRINCIPAL ---");
