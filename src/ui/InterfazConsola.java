@@ -160,18 +160,29 @@ public class InterfazConsola {
         }
 
         System.out.println("\n[ MOCHILA ]");
-        for (int i = 0; i < jugador.getMochila().size(); i++) {
-            System.out.print((i + 1) + ". " + jugador.getMochila().get(i).getNombre() + " | ");
+        java.util.Map<String, Integer> conteoObjetos = new java.util.LinkedHashMap<>();
+        java.util.Map<String, Objeto> tipoObjetos = new java.util.HashMap<>();
+        
+        for (Objeto obj : jugador.getMochila()) {
+            conteoObjetos.put(obj.getNombre(), conteoObjetos.getOrDefault(obj.getNombre(), 0) + 1);
+            tipoObjetos.put(obj.getNombre(), obj);
         }
-        System.out.println("0. Cancelar");
+        
+        java.util.List<String> nombresUnicos = new java.util.ArrayList<>(conteoObjetos.keySet());
+        
+        for (int i = 0; i < nombresUnicos.size(); i++) {
+            System.out.print((i + 1) + ". " + nombresUnicos.get(i) + " x" + conteoObjetos.get(nombresUnicos.get(i)) + " | ");
+        }
+        System.out.println("\n0. Cancelar");
         System.out.print("> Elige un objeto: ");
         
         try {
             int seleccion = Integer.parseInt(scanner.nextLine());
             if (seleccion == 0) return false;
             
-            if (seleccion > 0 && seleccion <= jugador.getMochila().size()) {
-                Objeto obj = jugador.getMochila().get(seleccion - 1);
+            if (seleccion > 0 && seleccion <= nombresUnicos.size()) {
+                String nombreSeleccionado = nombresUnicos.get(seleccion - 1);
+                Objeto obj = tipoObjetos.get(nombreSeleccionado);
                 Pokemon objetivo = activo;
 
                 if (obj.getNombre().equalsIgnoreCase("Pokeball")) {
@@ -206,7 +217,12 @@ public class InterfazConsola {
                 }
                 
                 // Si la logica fue correcta, se remueve y usa
-                jugador.getMochila().remove(seleccion - 1);
+                for (int i = 0; i < jugador.getMochila().size(); i++) {
+                    if (jugador.getMochila().get(i).getNombre().equals(nombreSeleccionado)) {
+                        jugador.getMochila().remove(i);
+                        break;
+                    }
+                }
                 obj.usar(objetivo);
                 return true;
             }
