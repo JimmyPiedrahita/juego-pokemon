@@ -38,3 +38,16 @@ pokeball comprar en la tienda, con al menos un pokemon podras ir a batalla, tamb
       - FabricaRevivir.java: Fábrica específica para revivir.
   - ui/: Interfaz de usuario e interacciones.
     - InterfazConsola.java: Maneja los menús, entradas y salidas de texto en la terminal.
+
+
+## Análisis de Calidad Estática (SonarQube)
+
+Este proyecto está configurado para someterse a auditorías de calidad de código utilizando SonarQube a través de Maven. Por razones de seguridad (prevención de fugas de credenciales), la configuración de autenticación no está expuesta en el archivo `pom.xml`.
+
+Para ejecutar el análisis en tu entorno local, sigue estos pasos:
+
+### 1. Levantar la Infraestructura Local
+Asegúrate de tener Docker instalado y ejecuta el siguiente contenedor para inicializar un servidor SonarQube aislado:
+
+```bash
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
