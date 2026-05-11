@@ -1,0 +1,96 @@
+package core.services;
+
+import core.Entrenador;
+import core.Pokemon;
+import items.domain.Objeto;
+import java.util.Random;
+import java.util.Scanner;
+
+public class ServicioExploracion {
+    private Scanner scanner;
+    private Random rand;
+
+    public ServicioExploracion(Scanner scanner) {
+        this.scanner = scanner;
+        this.rand = new Random();
+    }
+
+    public void explorar(Entrenador jugador) {
+        if (!tienePokeball(jugador)) {
+            System.out.println("\n¡No tienes Pokeballs! No puedes salir a explorar sin ellas. Visita la Tienda.");
+            return;
+        }
+
+        boolean explorando = true;
+        while (explorando) {
+            System.out.println("\n[ EXPLORANDO ZONA ]");
+            System.out.println("1. Buscar / Lanzar Pokeball | 2. Salir");
+            System.out.print("> Elige una opcion: ");
+            String opcion = scanner.nextLine();
+
+            if (opcion.equals("1")) {
+                if (!tienePokeball(jugador)) {
+                    System.out.println("Ya no te quedan Pokeballs en la mochila.");
+                    break;
+                }
+
+                Pokemon salvaje = generarPokemonAleatorio();
+                System.out.println("\n¡Un " + salvaje.getNombre() + " salvaje ha aparecido frente a ti!");
+
+                usarYDescartarPokeball(jugador);
+
+                int distanciaPokemon = rand.nextInt(20) + 1;
+                int rangoPokeball = rand.nextInt(15) + 6;
+
+                System.out.println("El " + salvaje.getNombre() + " se encuentra a " + distanciaPokemon + " metros.");
+                System.out.println("Has lanzado tu Pokeball a " + rangoPokeball + " metros.");
+
+                if (rangoPokeball >= distanciaPokemon) {
+                    System.out.println("¡Felicidades! ¡Has capturado al " + salvaje.getNombre() + "!");
+                    salvaje.setCapturado(true);
+                    jugador.agregarPokemon(salvaje);
+                } else {
+                    System.out.println("¡Oh no! El lanzamiento ha caido lejos y el " + salvaje.getNombre() + " ha huido.");
+                }
+
+            } else if (opcion.equals("2")) {
+                System.out.println("Regresando a una zona segura...");
+                explorando = false;
+            } else {
+                System.out.println("Opcion invalida.");
+            }
+        }
+    }
+
+    private boolean tienePokeball(Entrenador jugador) {
+        for (Objeto obj : jugador.getMochila()) {
+            if (obj.getNombre().equalsIgnoreCase("Pokeball")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void usarYDescartarPokeball(Entrenador jugador) {
+        for (int i = 0; i < jugador.getMochila().size(); i++) {
+            if (jugador.getMochila().get(i).getNombre().equalsIgnoreCase("Pokeball")) {
+                jugador.getMochila().remove(i);
+                break;
+            }
+        }
+    }
+
+    public Pokemon generarPokemonAleatorio() {
+        String[] nombres = {"Gastly", "Rattata", "Caterpie", "Weedle", "Pikachu", "Meowth", "Zubat"};
+        String[] tipos = {"Fantasma", "Normal", "Bicho", "Bicho", "Electrico", "Normal", "Veneno"};
+        int r = rand.nextInt(nombres.length);
+        return new Pokemon.PokemonBuilder(nombres[r])
+                .tipo(tipos[r])
+                .nivel(5)
+                .hpMaximo(20)
+                .ataque(10)
+                .defensa(5)
+                .velocidad(10)
+                .build();
+    }
+}
