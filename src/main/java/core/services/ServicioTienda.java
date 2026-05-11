@@ -25,9 +25,9 @@ public class ServicioTienda {
         boolean enTienda = true;
 
         while (enTienda) {
-            System.out.println("\n[ TIENDA POKEMON ] Fondos: $" + jugador.getDinero());
-            System.out.println("1. Pokeball ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball") + ") | 2. Pocion ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion") + ") | 3. Revivir ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir") + ") | 4. Salir");
-            System.out.print("> Elige una opcion: ");
+            core.events.GameEventManager.getInstance().notifyMessage("\n[ TIENDA POKEMON ] Dinero: $" + jugador.getDinero());
+            core.events.GameEventManager.getInstance().notifyMessage("1. Pokeball ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball") + ") | 2. Pocion ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion") + ") | 3. Revivir ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir") + ") | 4. Salir");
+            System.out.print("> ");
 
             String opcion = scanner.nextLine();
 
@@ -35,28 +35,28 @@ public class ServicioTienda {
                 case "1":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball"))) {
                         jugador.agregarObjeto(fPokeball.entregarObjeto());
-                        System.out.println("¡Compraste una Pokeball!");
+                        core.events.GameEventManager.getInstance().notifyMessage("Compraste una Pokeball");
                     }
                     break;
                 case "2":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion"))) {
                         jugador.agregarObjeto(fPociones.entregarObjeto());
-                        System.out.println("¡Compraste una Pocion!");
+                        core.events.GameEventManager.getInstance().notifyMessage("Compraste una Pocion");
                     }
                     break;
                 case "3":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir"))) {
                         jugador.agregarObjeto(fRevivir.entregarObjeto());
-                        System.out.println("¡Compraste un Revivir!");
+                        core.events.GameEventManager.getInstance().notifyMessage("Compraste un Revivir");
                     }
                     break;
                 case "4":
-                    System.out.println("¡Vuelve pronto!");
                     enTienda = false;
                     break;
                 default:
-                    System.out.println("Error: Opcion invalida. Por favor, introduce un numero del 1 al 4.");
+                    core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
             }
         }
     }
 }
+

@@ -10,7 +10,7 @@ public class EstadoNormal implements EstadoPokemon {
         if (nuevoHp <= 0) {
             pokemon.setHpActual(0);
             pokemon.setEstado(new EstadoDebilitado());
-            System.out.println(pokemon.getNombre() + " se ha debilitado.");
+            core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " se ha debilitado.");
         } else {
             pokemon.setHpActual(nuevoHp);
         }
@@ -23,12 +23,12 @@ public class EstadoNormal implements EstadoPokemon {
             nuevoHp = pokemon.getHpMaximo();
         }
         pokemon.setHpActual(nuevoHp);
-        System.out.println(pokemon.getNombre() + " ha recuperado salud. HP actual: " + pokemon.getHpActual());
+        core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " ha recuperado salud. HP actual: " + pokemon.getHpActual());
     }
 
     @Override
     public void revivir(Pokemon pokemon, int porcentaje) {
-        System.out.println(pokemon.getNombre() + " no esta debilitado y no necesita revivir.");
+        core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " no esta debilitado y no necesita revivir.");
     }
 
     @Override

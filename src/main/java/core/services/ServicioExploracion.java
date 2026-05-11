@@ -17,47 +17,46 @@ public class ServicioExploracion {
 
     public void explorar(Entrenador jugador) {
         if (!tienePokeball(jugador)) {
-            System.out.println("\n¡No tienes Pokeballs! No puedes salir a explorar sin ellas. Visita la Tienda.");
+            core.events.GameEventManager.getInstance().notifyMessage("\nNo tienes Pokeballs");
             return;
         }
 
         boolean explorando = true;
         while (explorando) {
-            System.out.println("\n[ EXPLORANDO ZONA ]");
-            System.out.println("1. Buscar / Lanzar Pokeball | 2. Salir");
-            System.out.print("> Elige una opcion: ");
+            core.events.GameEventManager.getInstance().notifyMessage("\n[ EXPLORANDO ZONA ]");
+            core.events.GameEventManager.getInstance().notifyMessage("1. Lanzar Pokeball | 2. Salir");
+            System.out.print("> ");
             String opcion = scanner.nextLine();
 
             if (opcion.equals("1")) {
                 if (!tienePokeball(jugador)) {
-                    System.out.println("Ya no te quedan Pokeballs en la mochila.");
+                    core.events.GameEventManager.getInstance().notifyMessage("Ya no te quedan Pokeballs en la mochila.");
                     break;
                 }
 
                 Pokemon salvaje = generarPokemonAleatorio();
-                System.out.println("\n¡Un " + salvaje.getNombre() + " salvaje ha aparecido frente a ti!");
+                core.events.GameEventManager.getInstance().notifyMessage("\nUn " + salvaje.getNombre() + " salvaje ha aparecido frente a ti");
 
                 usarYDescartarPokeball(jugador);
 
                 int distanciaPokemon = rand.nextInt(20) + 1;
                 int rangoPokeball = rand.nextInt(15) + 6;
 
-                System.out.println("El " + salvaje.getNombre() + " se encuentra a " + distanciaPokemon + " metros.");
-                System.out.println("Has lanzado tu Pokeball a " + rangoPokeball + " metros.");
+                core.events.GameEventManager.getInstance().notifyMessage("El " + salvaje.getNombre() + " se encuentra a " + distanciaPokemon + " metros.");
+                core.events.GameEventManager.getInstance().notifyMessage("Has lanzado tu Pokeball a " + rangoPokeball + " metros.");
 
                 if (rangoPokeball >= distanciaPokemon) {
-                    System.out.println("¡Felicidades! ¡Has capturado al " + salvaje.getNombre() + "!");
+                    core.events.GameEventManager.getInstance().notifyMessage("¡Felicidades, capturaste a " + salvaje.getNombre());
                     salvaje.setCapturado(true);
                     jugador.agregarPokemon(salvaje);
                 } else {
-                    System.out.println("¡Oh no! El lanzamiento ha caido lejos y el " + salvaje.getNombre() + " ha huido.");
+                    core.events.GameEventManager.getInstance().notifyMessage("El lanzamiento ha caido lejos y el " + salvaje.getNombre() + " ha huido.");
                 }
 
             } else if (opcion.equals("2")) {
-                System.out.println("Regresando a una zona segura...");
                 explorando = false;
             } else {
-                System.out.println("Opcion invalida.");
+                core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
             }
         }
     }
@@ -94,3 +93,4 @@ public class ServicioExploracion {
                 .build();
     }
 }
+

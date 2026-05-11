@@ -31,21 +31,21 @@ public class ServicioBatalla {
     }
 
     public void iniciarBatallaInteractiva(Entrenador jugador, Entrenador rival) {
-        System.out.println("\nUN " + rival.getNombre().toUpperCase() + " HA APARECIDO!");
+        core.events.GameEventManager.getInstance().notifyMessage("\n" + rival.getNombre().toUpperCase() + " HA APARECIDO");
         
         jugador.setPokemonActivo(obtenerSiguientePokemonApto(jugador));
         rival.setPokemonActivo(obtenerSiguientePokemonApto(rival));
 
         if (jugador.getPokemonActivo() == null || rival.getPokemonActivo() == null) return;
 
-        System.out.println("Adelante, " + jugador.getPokemonActivo().getNombre() + "!");
+        core.events.GameEventManager.getInstance().notifyMessage("Adelante, " + jugador.getPokemonActivo().getNombre());
 
         while (jugador.tienePokemonVivos() && rival.tienePokemonVivos()) {
-            System.out.println("\n[ BATALLA ]");
+            core.events.GameEventManager.getInstance().notifyMessage("\n[ BATALLA ]");
             Pokemon activoRival = rival.getPokemonActivo();
             Pokemon activoJugador = jugador.getPokemonActivo();
-            System.out.println("Rival: " + activoRival.getNombre() + " [HP: " + activoRival.getHpActual() + "] | Tu: " + activoJugador.getNombre() + " [HP: " + activoJugador.getHpActual() + "]");
-            System.out.print("1. Atacar | 2. Mochila | 3. Cambiar Pokemon\n> Que haras?: ");
+            core.events.GameEventManager.getInstance().notifyMessage("Rival: " + activoRival.getNombre() + " [HP: " + activoRival.getHpActual() + "] | Tu: " + activoJugador.getNombre() + " [HP: " + activoJugador.getHpActual() + "]");
+            System.out.print("1. Atacar | 2. Mochila | 3. Cambiar Pokemon\n> ");
 
             String opcion = scanner.nextLine();
             battle.command.ComandoTurno cmdJugador = null;
@@ -69,7 +69,7 @@ public class ServicioBatalla {
                     }
                     break;
                 default:
-                    System.out.println("Opcion invalida.");
+                    core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
                     continue;
             }
 
@@ -106,11 +106,11 @@ public class ServicioBatalla {
         }
 
         if (jugador.tienePokemonVivos()) {
-            System.out.println("\nHas ganado la batalla!");
+            core.events.GameEventManager.getInstance().notifyMessage("\nHas ganado la batalla");
             int recompensa = rand.nextInt(100) + 50; 
             jugador.ganarDinero(recompensa);
         } else {
-            System.out.println("\nHas perdido. Debes ir al Centro Pokemon para curarte.");
+            core.events.GameEventManager.getInstance().notifyMessage("\nHas perdido.");
         }
     }
 
@@ -123,11 +123,11 @@ public class ServicioBatalla {
 
     private battle.command.ComandoTurno abrirMochila(Entrenador jugador, Pokemon activo, Pokemon activoRival) {
         if (jugador.getMochila().isEmpty()) {
-            System.out.println("Tu mochila esta vacia.");
+            core.events.GameEventManager.getInstance().notifyMessage("Tu mochila esta vacia.");
             return null;
         }
 
-        System.out.println("\n[ MOCHILA ]");
+        core.events.GameEventManager.getInstance().notifyMessage("\n[ MOCHILA ]");
         java.util.Map<String, Integer> conteoObjetos = new java.util.LinkedHashMap<>();
         java.util.Map<String, Objeto> tipoObjetos = new java.util.HashMap<>();
         
@@ -141,8 +141,8 @@ public class ServicioBatalla {
         for (int i = 0; i < nombresUnicos.size(); i++) {
             System.out.print((i + 1) + ". " + nombresUnicos.get(i) + " x" + conteoObjetos.get(nombresUnicos.get(i)) + " | ");
         }
-        System.out.println("\n0. Cancelar");
-        System.out.print("> Elige un objeto: ");
+        core.events.GameEventManager.getInstance().notifyMessage("\n0. Cancelar");
+        System.out.print("> ");
         
         try {
             int seleccion = Integer.parseInt(scanner.nextLine());
@@ -156,14 +156,14 @@ public class ServicioBatalla {
                 if (obj.getTipoObjetivo() == items.domain.TipoObjetivo.RIVAL) {
                     objetivo = activoRival;
                 } else if (obj.getTipoObjetivo() == items.domain.TipoObjetivo.ALIADO) {
-                    System.out.println("\n[ ELEGIR POKEMON - " + obj.getNombre().toUpperCase() + " ]");
+                    core.events.GameEventManager.getInstance().notifyMessage("\n[ ELEGIR POKEMON - " + obj.getNombre().toUpperCase() + " ]");
                     for (int i = 0; i < jugador.getEquipo().size(); i++) {
                         Pokemon p = jugador.getEquipo().get(i);
                         String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
-                        System.out.println((i + 1) + ". " + p.getNombre() + " " + estado);
+                        core.events.GameEventManager.getInstance().notifyMessage((i + 1) + ". " + p.getNombre() + " " + estado);
                     }
-                    System.out.println("0. Cancelar");
-                    System.out.print("> Elige un Pokemon: ");
+                    core.events.GameEventManager.getInstance().notifyMessage("0. Cancelar");
+                    System.out.print("> ");
                     
                     int opc = Integer.parseInt(scanner.nextLine());
                     if (opc == 0) return null;
@@ -171,11 +171,11 @@ public class ServicioBatalla {
                     if (opc > 0 && opc <= jugador.getEquipo().size()) {
                         objetivo = jugador.getEquipo().get(opc - 1);
                         if (!obj.esAplicable(objetivo)) {
-                            System.out.println(obj.getMensajeErrorAplicacion());
+                            core.events.GameEventManager.getInstance().notifyMessage(obj.getMensajeErrorAplicacion());
                             return null;
                         }
                     } else {
-                        System.out.println("Opcion invalida.");
+                        core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
                         return null;
                     }
                 }
@@ -189,21 +189,21 @@ public class ServicioBatalla {
                 return new battle.command.ComandoUsarObjeto(obj, objetivo);
             }
         } catch (NumberFormatException e) {
-            System.out.println("Entrada invalida.");
+            core.events.GameEventManager.getInstance().notifyMessage("Entrada invalida.");
         }
         return null;
     }
 
     private Pokemon rotarPokemonActivo(Entrenador jugador, Pokemon actual) {
-        System.out.println("\n[ CAMBIAR POKEMON ]");
+        core.events.GameEventManager.getInstance().notifyMessage("\n[ CAMBIAR POKEMON ]");
         for (int i = 0; i < jugador.getEquipo().size(); i++) {
             Pokemon p = jugador.getEquipo().get(i);
             String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
             String marcaActual = (p == actual) ? " (ACTUAL)" : "";
-            System.out.println((i + 1) + ". " + p.getNombre() + " " + estado + marcaActual);
+            core.events.GameEventManager.getInstance().notifyMessage((i + 1) + ". " + p.getNombre() + " " + estado + marcaActual);
         }
-        System.out.println("0. Cancelar");
-        System.out.print("> Elige un Pokemon: ");
+        core.events.GameEventManager.getInstance().notifyMessage("0. Cancelar");
+        System.out.print("> ");
         
         try {
             int opcion = Integer.parseInt(scanner.nextLine());
@@ -213,21 +213,22 @@ public class ServicioBatalla {
             if (opcion > 0 && opcion <= jugador.getEquipo().size()) {
                 Pokemon seleccionado = jugador.getEquipo().get(opcion - 1);
                 if (seleccionado == actual) {
-                    System.out.println("¡" + seleccionado.getNombre() + " ya está en combate!");
+                    core.events.GameEventManager.getInstance().notifyMessage(seleccionado.getNombre() + " ya esta en combate");
                     return actual;
                 }
                 if (seleccionado.isDebilitado()) {
-                    System.out.println("¡" + seleccionado.getNombre() + " está debilitado y no puede luchar!");
+                    core.events.GameEventManager.getInstance().notifyMessage(seleccionado.getNombre() + " esta debilitado");
                     return actual;
                 }
-                System.out.println("¡Regresa " + actual.getNombre() + "! ¡Adelante " + seleccionado.getNombre() + "!");
+                core.events.GameEventManager.getInstance().notifyMessage("Regresa " + actual.getNombre() + " Adelante " + seleccionado.getNombre());
                 return seleccionado;
             } else {
-                System.out.println("Opción inválida.");
+                core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida.");
+            core.events.GameEventManager.getInstance().notifyMessage("Entrada invalida.");
         }
         return actual; 
     }
 }
+

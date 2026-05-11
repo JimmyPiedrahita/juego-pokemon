@@ -8,11 +8,11 @@ public class Pocion implements Objeto{
     @Override
     public void usar(Pokemon pokemon) {
         if (esAplicable(pokemon)) {
-            System.out.println("Pocion usada en " + pokemon.getNombre());
+            core.events.GameEventManager.getInstance().notifyMessage("Pocion usada en " + pokemon.getNombre());
             pokemon.curar(puntosCuracion);
-            System.out.println("Nueva cantidad de vida " + pokemon.getHpActual());
+            core.events.GameEventManager.getInstance().notifyMessage("Nueva cantidad de vida " + pokemon.getHpActual());
         } else {
-            System.out.println(getMensajeErrorAplicacion());
+            core.events.GameEventManager.getInstance().notifyMessage(getMensajeErrorAplicacion());
         }
     }
 
@@ -33,6 +33,7 @@ public class Pocion implements Objeto{
 
     @Override
     public String getMensajeErrorAplicacion() {
-        return "No puedes usar una pocion en un Pokemon debilitado o con salud maxima.";
+        return "No se puede usar en un Pokemon debilitado o con salud maxima.";
     }
 }
+

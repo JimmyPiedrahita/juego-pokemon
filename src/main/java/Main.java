@@ -2,14 +2,18 @@ import java.util.Scanner;
 import core.Entrenador;
 import items.factory.FabricaPokeball;
 import ui.InterfazConsola;
+import core.events.GameEventManager;
+import ui.ConsolaLogListener;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        GameEventManager.getInstance().subscribe(new ConsolaLogListener());
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("=================================");
         System.out.println("   BIENVENIDO AL JUEGO POKEMON   ");
         System.out.println("=================================");
-        System.out.print("Por favor, ingresa tu nombre de entrenador: ");
+        System.out.print("Ingresa tu nombre de entrenador: ");
         String nombre = scanner.nextLine();
 
         // 1. Configuracion inicial del estado del juego

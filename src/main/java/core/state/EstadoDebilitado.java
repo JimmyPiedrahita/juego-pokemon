@@ -6,12 +6,12 @@ public class EstadoDebilitado implements EstadoPokemon {
 
     @Override
     public void recibirDano(Pokemon pokemon, int dano) {
-        System.out.println(pokemon.getNombre() + " ya esta debilitado y no puede recibir mas dano.");
+        core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " ya esta debilitado y no puede recibir mas dano.");
     }
 
     @Override
     public void curar(Pokemon pokemon, int cantidad) {
-        System.out.println(pokemon.getNombre() + " esta debilitado y no puede ser curado con una pocion.");
+        core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " esta debilitado y no puede ser curado con una pocion.");
     }
 
     @Override
@@ -19,7 +19,7 @@ public class EstadoDebilitado implements EstadoPokemon {
         int hpRevivido = (pokemon.getHpMaximo() * porcentaje) / 100;
         pokemon.setHpActual(hpRevivido);
         pokemon.setEstado(new EstadoNormal());
-        System.out.println(pokemon.getNombre() + " ha revivido con " + pokemon.getHpActual() + " HP.");
+        core.events.GameEventManager.getInstance().notifyMessage(pokemon.getNombre() + " ha revivido con " + pokemon.getHpActual() + " HP.");
     }
 
     @Override

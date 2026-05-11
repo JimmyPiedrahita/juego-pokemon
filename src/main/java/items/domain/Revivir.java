@@ -8,10 +8,10 @@ public class Revivir implements Objeto {
     @Override
     public void usar(Pokemon pokemon) {
         if (esAplicable(pokemon)) {
-            System.out.println("Se revivio a " + pokemon.getNombre());
+            core.events.GameEventManager.getInstance().notifyMessage("Se revivio a " + pokemon.getNombre());
             pokemon.revivir(porcentajeRecuperacion);
         } else {
-            System.out.println(getMensajeErrorAplicacion());
+            core.events.GameEventManager.getInstance().notifyMessage(getMensajeErrorAplicacion());
         }
     }
 
@@ -32,6 +32,7 @@ public class Revivir implements Objeto {
 
     @Override
     public String getMensajeErrorAplicacion() {
-        return "No puedes usar Revivir en un Pokemon que no esta debilitado.";
+        return "No se puede usar en un Pokemon que no esta debilitado.";
     }
 }
+

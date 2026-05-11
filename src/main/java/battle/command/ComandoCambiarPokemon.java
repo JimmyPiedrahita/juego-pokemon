@@ -21,9 +21,9 @@ public class ComandoCambiarPokemon implements ComandoTurno {
     public void ejecutar() {
         Pokemon actual = entrenador.getPokemonActivo();
         if (actual != null && !actual.isDebilitado()) {
-            System.out.println("¡Regresa " + actual.getNombre() + "!");
+            core.events.GameEventManager.getInstance().notifyMessage("Regresa " + actual.getNombre());
         }
-        System.out.println("¡Adelante " + nuevoPokemon.getNombre() + "! ");
+        core.events.GameEventManager.getInstance().notifyMessage("Adelante " + nuevoPokemon.getNombre());
         entrenador.setPokemonActivo(nuevoPokemon);
     }
 }

@@ -93,16 +93,14 @@ public class Pokemon {
         }
     }
 
-    // RF-07: Lista de movimientos
     public void aprenderMovimiento(String movimiento) {
         if (this.movimientos.size() < 4) {
             this.movimientos.add(movimiento);
         } else {
-            System.out.println(this.nombre + " ya conoce 4 movimientos. No puede aprender mas.");
+            core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " ya conoce 4 movimientos. No puede aprender mas.");
         }
     }
 
-    // RF-08: Progresion al ganar batallas
     public void registrarVictoria() {
         if (!this.estado.isDebilitado()) {
             subirNivel();
@@ -117,7 +115,7 @@ public class Pokemon {
         this.defensa += ConfiguracionJuego.INCREMENTO_STATS_NIVEL;
         this.velocidad += ConfiguracionJuego.INCREMENTO_STATS_NIVEL;
 
-        System.out.println(this.nombre + " ha subido al nivel " + this.nivel);
+        core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " ha subido al nivel " + this.nivel);
 
         // Evaluacion de condicion de evolucion
         if (this.nivel == ConfiguracionJuego.NIVEL_EVOLUCION) {
@@ -125,9 +123,8 @@ public class Pokemon {
         }
     }
 
-    // RF-09: Evolucion
     private void evolucionar() {
-        System.out.println(this.nombre + " esta evolucionando...");
+        core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " esta evolucionando...");
         this.nombre = "Gran " + this.nombre;
 
         this.hpMaximo += ConfiguracionJuego.INCREMENTO_HP_EVOLUCION;
@@ -136,7 +133,7 @@ public class Pokemon {
         this.defensa += ConfiguracionJuego.INCREMENTO_STATS_EVOLUCION;
         this.velocidad += ConfiguracionJuego.INCREMENTO_STATS_EVOLUCION;
 
-        System.out.println("Evolucion completada! Ahora es " + this.nombre);
+        core.events.GameEventManager.getInstance().notifyMessage("Evolucion completada! Ahora es " + this.nombre);
     }
 
     public void recibirDano(int dano) {
@@ -159,7 +156,6 @@ public class Pokemon {
         this.estado = estado;
     }
 
-    // Getters necesarios para el motor de batalla y la UI
     public String getNombre() {
         return nombre;
     }

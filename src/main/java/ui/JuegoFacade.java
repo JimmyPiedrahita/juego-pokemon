@@ -25,11 +25,11 @@ public class JuegoFacade {
     public void iniciarJuego(Entrenador jugador) {
         boolean jugando = true;
         
-        System.out.println("\nEntrenador " + jugador.getNombre() + " listo para la aventura.");
+        System.out.println("\n-> " + jugador.getNombre() + " comencemos esta aventura.");
 
         while (jugando) {
             System.out.println("\n[ MENU PRINCIPAL ] \n1. Equipo | 2. Batalla | 3. Centro Pokemon | 4. Tienda | 5. Explorar | 6. Salir");
-            System.out.print("> Elige una opcion: ");
+            System.out.print("> ");
             
             String opcion = scanner.nextLine();
             
@@ -39,7 +39,7 @@ public class JuegoFacade {
                     break;
                 case "2":
                     if (!jugador.tienePokemonVivos()) {
-                        System.out.println("\n¡No tienes Pokemones o no estan en condiciones para luchar! Ve al Centro Pokemon o a explorar.");
+                        System.out.println("\nNo tienes Pokemones o estan debilitados.");
                         break;
                     }
                     System.out.println("\nBuscando entrenador para una batalla...");
@@ -56,11 +56,10 @@ public class JuegoFacade {
                     servicioExploracion.explorar(jugador);
                     break;
                 case "6":
-                    System.out.println("!Hasta pronto!");
                     jugando = false;
                     break;
                 default:
-                    System.out.println("Error: Opcion invalida. Por favor, introduce un numero del 1 al 6.");
+                    System.out.println("Opcion invalida.");
             }
         }
     }

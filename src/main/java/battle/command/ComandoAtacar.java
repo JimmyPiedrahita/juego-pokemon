@@ -29,8 +29,8 @@ public class ComandoAtacar implements ComandoTurno {
         }
 
         int danoFinal = Math.max(1, pAtacante.getAtaque() - pDefensor.getDefensa());
-        System.out.println("> " + pAtacante.getNombre() + " ataca a " + pDefensor.getNombre() + "!");
-        System.out.println("  Inflige " + danoFinal + " de dano.");
+        core.events.GameEventManager.getInstance().notifyMessage("> " + pAtacante.getNombre() + " ataca a " + pDefensor.getNombre());
+        core.events.GameEventManager.getInstance().notifyMessage("  Inflige " + danoFinal + " de dano.");
 
         pDefensor.recibirDano(danoFinal);
         
