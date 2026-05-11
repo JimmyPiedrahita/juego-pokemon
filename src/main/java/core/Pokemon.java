@@ -15,7 +15,7 @@ public class Pokemon {
     private int ataque;
     private int defensa;
     private int velocidad;
-    private boolean debilitado;
+    private core.state.EstadoPokemon estado;
     private boolean capturado = false;
 
     private List<String> movimientos;
@@ -29,7 +29,7 @@ public class Pokemon {
         this.ataque = builder.ataque;
         this.defensa = builder.defensa;
         this.velocidad = builder.velocidad;
-        this.debilitado = this.hpActual <= 0;
+        this.estado = this.hpActual <= 0 ? new core.state.EstadoDebilitado() : new core.state.EstadoNormal();
         this.movimientos = builder.movimientos != null ? builder.movimientos : new ArrayList<>();
     }
 
@@ -104,7 +104,7 @@ public class Pokemon {
 
     // RF-08: Progresion al ganar batallas
     public void registrarVictoria() {
-        if (!this.debilitado) {
+        if (!this.estado.isDebilitado()) {
             subirNivel();
         }
     }
@@ -140,30 +140,23 @@ public class Pokemon {
     }
 
     public void recibirDano(int dano) {
-        this.hpActual -= dano;
-        if (this.hpActual <= 0) {
-            this.hpActual = 0;
-            this.debilitado = true;
-            System.out.println(this.nombre + " se ha debilitado.");
-        }
+        this.estado.recibirDano(this, dano);
     }
 
     public void curar(int cantidad) {
-        if (!this.debilitado) {
-            this.hpActual += cantidad;
-            if (this.hpActual > this.hpMaximo) {
-                this.hpActual = this.hpMaximo;
-            }
-            System.out.println(this.nombre + " ha recuperado salud. HP actual: " + this.hpActual);
-        }
+        this.estado.curar(this, cantidad);
     }
 
     public void revivir(int porcentaje) {
-        if (this.debilitado) {
-            this.debilitado = false;
-            this.hpActual = (this.hpMaximo * porcentaje) / 100;
-            System.out.println(this.nombre + " ha revivido con " + this.hpActual + " HP.");
-        }
+        this.estado.revivir(this, porcentaje);
+    }
+
+    public void setHpActual(int hpActual) {
+        this.hpActual = hpActual;
+    }
+
+    public void setEstado(core.state.EstadoPokemon estado) {
+        this.estado = estado;
     }
 
     // Getters necesarios para el motor de batalla y la UI
@@ -172,7 +165,7 @@ public class Pokemon {
     }
 
     public boolean isDebilitado() {
-        return debilitado;
+        return estado.isDebilitado();
     }
 
     public int getVelocidad() {

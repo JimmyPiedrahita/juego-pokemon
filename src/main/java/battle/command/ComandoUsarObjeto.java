@@ -1,6 +1,5 @@
 package battle.command;
 
-import core.Entrenador;
 import items.domain.Objeto;
 import core.Pokemon;
 
