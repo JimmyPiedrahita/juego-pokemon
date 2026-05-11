@@ -427,6 +427,13 @@ public class InterfazConsola {
         String[] nombres = {"Gastly", "Rattata", "Caterpie", "Weedle", "Pikachu", "Meowth", "Zubat"};
         String[] tipos = {"Fantasma", "Normal", "Bicho", "Bicho", "Electrico", "Normal", "Veneno"};
         int r = new java.util.Random().nextInt(nombres.length);
-        return new Pokemon(nombres[r], tipos[r], 5, 20, 10, 5, 10);
+        return new Pokemon.PokemonBuilder(nombres[r])
+                .tipo(tipos[r])
+                .nivel(5)
+                .hpMaximo(20)
+                .ataque(10)
+                .defensa(5)
+                .velocidad(10)
+                .build();
     }
 }
