@@ -18,12 +18,23 @@ public class Entrenador {
     // RF-03: Inventario
     private List<Objeto> mochila;
 
+    // Control de batalla
+    private Pokemon pokemonActivo;
+
     public Entrenador(String nombre, int dineroInicial) {
         this.nombre = nombre;
         this.dinero = dineroInicial;
         this.equipo = new ArrayList<>();
         this.cajaPc = new ArrayList<>();
         this.mochila = new ArrayList<>();
+    }
+
+    public Pokemon getPokemonActivo() {
+        return pokemonActivo;
+    }
+
+    public void setPokemonActivo(Pokemon pokemonActivo) {
+        this.pokemonActivo = pokemonActivo;
     }
 
     // RF-04 y RF-05: Logica de restriccion estricta

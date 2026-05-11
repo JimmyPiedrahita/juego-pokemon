@@ -33,37 +33,37 @@ public class ServicioBatalla {
     public void iniciarBatallaInteractiva(Entrenador jugador, Entrenador rival) {
         System.out.println("\nUN " + rival.getNombre().toUpperCase() + " HA APARECIDO!");
         
-        Pokemon activoJugador = obtenerSiguientePokemonApto(jugador);
-        Pokemon activoRival = obtenerSiguientePokemonApto(rival);
+        jugador.setPokemonActivo(obtenerSiguientePokemonApto(jugador));
+        rival.setPokemonActivo(obtenerSiguientePokemonApto(rival));
 
-        if (activoJugador == null || activoRival == null) return;
+        if (jugador.getPokemonActivo() == null || rival.getPokemonActivo() == null) return;
 
-        System.out.println("Adelante, " + activoJugador.getNombre() + "!");
+        System.out.println("Adelante, " + jugador.getPokemonActivo().getNombre() + "!");
 
         while (jugador.tienePokemonVivos() && rival.tienePokemonVivos()) {
             System.out.println("\n[ BATALLA ]");
+            Pokemon activoRival = rival.getPokemonActivo();
+            Pokemon activoJugador = jugador.getPokemonActivo();
             System.out.println("Rival: " + activoRival.getNombre() + " [HP: " + activoRival.getHpActual() + "] | Tu: " + activoJugador.getNombre() + " [HP: " + activoJugador.getHpActual() + "]");
             System.out.print("1. Atacar | 2. Mochila | 3. Cambiar Pokemon\n> Que haras?: ");
 
             String opcion = scanner.nextLine();
-            int accion = 0;
+            battle.command.ComandoTurno cmdJugador = null;
 
             switch (opcion) {
                 case "1":
-                    accion = 1;
+                    cmdJugador = new battle.command.ComandoAtacar(jugador, rival);
                     break;
                 case "2":
-                    if (abrirMochila(jugador, activoJugador, activoRival)) {
-                        accion = 2;
-                    } else {
+                    cmdJugador = abrirMochila(jugador, activoJugador, activoRival);
+                    if (cmdJugador == null) {
                         continue; 
                     }
                     break;
                 case "3":
                     Pokemon nuevo = rotarPokemonActivo(jugador, activoJugador);
                     if (nuevo != activoJugador) {
-                        activoJugador = nuevo;
-                        accion = 3;
+                        cmdJugador = new battle.command.ComandoCambiarPokemon(jugador, nuevo);
                     } else {
                         continue;
                     }
@@ -73,7 +73,7 @@ public class ServicioBatalla {
                     continue;
             }
 
-            int accionRival = 1; 
+            battle.command.ComandoTurno cmdRival = new battle.command.ComandoAtacar(rival, jugador); 
             if (rand.nextInt(10) < 2) { 
                 Pokemon posibleCambio = null;
                 for (Pokemon p : rival.getEquipo()) {
@@ -83,25 +83,25 @@ public class ServicioBatalla {
                     }
                 }
                 if (posibleCambio != null) {
-                    System.out.println("¡El rival " + rival.getNombre() + " retira a " + activoRival.getNombre() + " y envía a " + posibleCambio.getNombre() + "!");
-                    activoRival = posibleCambio;
-                    accionRival = 3;
+                    cmdRival = new battle.command.ComandoCambiarPokemon(rival, posibleCambio);
                 }
             }
 
-            motor.ejecutarTurno(jugador, activoJugador, accion, rival, activoRival, accionRival);
+            motor.ejecutarTurno(cmdJugador, cmdRival);
 
-            if (activoRival.isCapturado()) {
-                jugador.agregarPokemon(activoRival);
-                activoRival.curar(999);
+            Pokemon activoRivalActual = rival.getPokemonActivo();
+
+            if (activoRivalActual.isCapturado()) {
+                jugador.agregarPokemon(activoRivalActual);
+                activoRivalActual.curar(999);
                 break;
             }
 
-            if (activoJugador.isDebilitado()) {
-                activoJugador = obtenerSiguientePokemonApto(jugador);
+            if (jugador.getPokemonActivo().isDebilitado()) {
+                jugador.setPokemonActivo(obtenerSiguientePokemonApto(jugador));
             }
-            if (activoRival.isDebilitado()) {
-                activoRival = obtenerSiguientePokemonApto(rival);
+            if (rival.getPokemonActivo().isDebilitado()) {
+                rival.setPokemonActivo(obtenerSiguientePokemonApto(rival));
             }
         }
 
@@ -121,10 +121,10 @@ public class ServicioBatalla {
         return null;
     }
 
-    private boolean abrirMochila(Entrenador jugador, Pokemon activo, Pokemon activoRival) {
+    private battle.command.ComandoTurno abrirMochila(Entrenador jugador, Pokemon activo, Pokemon activoRival) {
         if (jugador.getMochila().isEmpty()) {
             System.out.println("Tu mochila esta vacia.");
-            return false;
+            return null;
         }
 
         System.out.println("\n[ MOCHILA ]");
@@ -146,16 +146,16 @@ public class ServicioBatalla {
         
         try {
             int seleccion = Integer.parseInt(scanner.nextLine());
-            if (seleccion == 0) return false;
+            if (seleccion == 0) return null;
             
             if (seleccion > 0 && seleccion <= nombresUnicos.size()) {
                 String nombreSeleccionado = nombresUnicos.get(seleccion - 1);
                 Objeto obj = tipoObjetos.get(nombreSeleccionado);
                 Pokemon objetivo = activo;
 
-                if (obj.getNombre().equalsIgnoreCase("Pokeball")) {
+                if (obj.getTipoObjetivo() == items.domain.TipoObjetivo.RIVAL) {
                     objetivo = activoRival;
-                } else if (obj.getNombre().equalsIgnoreCase("Pocion") || obj.getNombre().equalsIgnoreCase("Revivir")) {
+                } else if (obj.getTipoObjetivo() == items.domain.TipoObjetivo.ALIADO) {
                     System.out.println("\n[ ELEGIR POKEMON - " + obj.getNombre().toUpperCase() + " ]");
                     for (int i = 0; i < jugador.getEquipo().size(); i++) {
                         Pokemon p = jugador.getEquipo().get(i);
@@ -166,21 +166,17 @@ public class ServicioBatalla {
                     System.out.print("> Elige un Pokemon: ");
                     
                     int opc = Integer.parseInt(scanner.nextLine());
-                    if (opc == 0) return false;
+                    if (opc == 0) return null;
                     
                     if (opc > 0 && opc <= jugador.getEquipo().size()) {
                         objetivo = jugador.getEquipo().get(opc - 1);
-                        if (obj.getNombre().equalsIgnoreCase("Pocion") && objetivo.isDebilitado()) {
-                            System.out.println("No puedes usar una pocion en un Pokemon debilitado.");
-                            return false;
-                        }
-                        if (obj.getNombre().equalsIgnoreCase("Revivir") && !objetivo.isDebilitado()) {
-                            System.out.println("No puedes usar revivir en un Pokemon que no esta debilitado.");
-                            return false;
+                        if (!obj.esAplicable(objetivo)) {
+                            System.out.println(obj.getMensajeErrorAplicacion());
+                            return null;
                         }
                     } else {
                         System.out.println("Opcion invalida.");
-                        return false;
+                        return null;
                     }
                 }
                 
@@ -190,13 +186,12 @@ public class ServicioBatalla {
                         break;
                     }
                 }
-                obj.usar(objetivo);
-                return true;
+                return new battle.command.ComandoUsarObjeto(obj, objetivo);
             }
         } catch (NumberFormatException e) {
             System.out.println("Entrada invalida.");
         }
-        return false;
+        return null;
     }
 
     private Pokemon rotarPokemonActivo(Entrenador jugador, Pokemon actual) {

@@ -29,5 +29,19 @@ public class Pokeball implements Objeto {
     public String getNombre() {
         return "Pokeball";
     }
-    
+
+    @Override
+    public TipoObjetivo getTipoObjetivo() {
+        return TipoObjetivo.RIVAL;
+    }
+
+    @Override
+    public boolean esAplicable(Pokemon pokemon) {
+        return !pokemon.isDebilitado() && !pokemon.isCapturado();
+    }
+
+    @Override
+    public String getMensajeErrorAplicacion() {
+        return "No puedes usar una Pokeball en este objetivo.";
+    }
 }
