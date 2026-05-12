@@ -1,0 +1,12 @@
+[
+  { "nombre": "Pikachu", "tipo": "Electrico" },
+  { "nombre": "Gastly", "tipo": "Fantasma" },
+  { "nombre": "Rattata", "tipo": "Normal" },
+  { "nombre": "Caterpie", "tipo": "Bicho" },
+  { "nombre": "Weedle", "tipo": "Veneno" },
+  { "nombre": "Meowth", "tipo": "Normal" },
+  { "nombre": "Zubat", "tipo": "Veneno" },
+  { "nombre": "Squirtle", "tipo": "Agua" },
+  { "nombre": "Charmander", "tipo": "Fuego" },
+  { "nombre": "Bulbasaur", "tipo": "Planta" }
+]

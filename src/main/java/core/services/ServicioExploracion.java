@@ -80,13 +80,29 @@ public class ServicioExploracion {
     }
 
     public Pokemon generarPokemonAleatorio() {
-        String[] nombres = {"Gastly", "Rattata", "Caterpie", "Weedle", "Pikachu", "Meowth", "Zubat"};
-        String[] tipos = {"Fantasma", "Normal", "Bicho", "Bicho", "Electrico", "Normal", "Veneno"};
-        int r = rand.nextInt(nombres.length);
-        return new Pokemon.PokemonBuilder(nombres[r])
-                .tipo(tipos[r])
+        java.util.List<java.util.Map<String, String>> pokemonsBase = core.config.DataLoader.getPokemonsBase();
+        
+        if (pokemonsBase.isEmpty()) {
+            // Recurso de respaldo si el JSON falla
+            return new Pokemon.PokemonBuilder("Rattata")
+                    .tipo("Normal")
+                    .nivel(5)
+                    .hpMaximo(20)
+                    .hpActual(20)
+                    .ataque(10)
+                    .defensa(5)
+                    .velocidad(10)
+                    .build();
+        }
+
+        int r = rand.nextInt(pokemonsBase.size());
+        java.util.Map<String, String> base = pokemonsBase.get(r);
+
+        return new Pokemon.PokemonBuilder(base.get("nombre"))
+                .tipo(base.get("tipo"))
                 .nivel(5)
                 .hpMaximo(20)
+                .hpActual(20)
                 .ataque(10)
                 .defensa(5)
                 .velocidad(10)

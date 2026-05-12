@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.Random;
 import battle.MotorBatalla;
 import core.Entrenador;
+import core.Movimiento;
 import core.Pokemon;
 import items.domain.Objeto;
 
@@ -52,7 +53,30 @@ public class ServicioBatalla {
 
             switch (opcion) {
                 case "1":
-                    cmdJugador = new battle.command.ComandoAtacar(jugador, rival);
+                    java.util.List<Movimiento> movs = activoJugador.getMovimientos();
+                    if (movs == null || movs.isEmpty()) {
+                        System.out.println("Este Pokemon no tiene movimientos.");
+                        continue;
+                    }
+                    System.out.println("Elige un movimiento:");
+                    for (int i = 0; i < movs.size(); i++) {
+                        System.out.println((i + 1) + ". " + movs.get(i).getNombre() + " (Poder: " + movs.get(i).getPotencia() + ", Tipo: " + movs.get(i).getTipo() + ")");
+                    }
+                    System.out.println((movs.size() + 1) + ". Cancelar");
+                    System.out.print("> ");
+                    String oppAtaque = scanner.nextLine();
+                    int indiceAtaque = -1;
+                    try {
+                        indiceAtaque = Integer.parseInt(oppAtaque) - 1;
+                    } catch (NumberFormatException e) {
+                        // ignore
+                    }
+
+                    if (indiceAtaque >= 0 && indiceAtaque < movs.size()) {
+                        cmdJugador = new battle.command.ComandoAtacar(jugador, rival, movs.get(indiceAtaque));
+                    } else {
+                        continue;
+                    }
                     break;
                 case "2":
                     cmdJugador = abrirMochila(jugador, activoJugador, activoRival);
@@ -73,7 +97,13 @@ public class ServicioBatalla {
                     continue;
             }
 
-            battle.command.ComandoTurno cmdRival = new battle.command.ComandoAtacar(rival, jugador); 
+            // Seleccionar movimiento aleatorio para el rival
+            Movimiento movRival = null;
+            java.util.List<Movimiento> movsRival = activoRival.getMovimientos();
+            if (movsRival != null && !movsRival.isEmpty()) {
+                movRival = movsRival.get(rand.nextInt(movsRival.size()));
+            }
+            battle.command.ComandoTurno cmdRival = new battle.command.ComandoAtacar(rival, jugador, movRival); 
             if (rand.nextInt(10) < 2) { 
                 Pokemon posibleCambio = null;
                 for (Pokemon p : rival.getEquipo()) {

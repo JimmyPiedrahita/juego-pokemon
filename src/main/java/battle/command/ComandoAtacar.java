@@ -1,15 +1,18 @@
 package battle.command;
 
 import core.Entrenador;
+import core.Movimiento;
 import core.Pokemon;
 
 public class ComandoAtacar implements ComandoTurno {
     private Entrenador atacante;
     private Entrenador defensor;
+    private Movimiento movimiento;
 
-    public ComandoAtacar(Entrenador atacante, Entrenador defensor) {
+    public ComandoAtacar(Entrenador atacante, Entrenador defensor, Movimiento movimiento) {
         this.atacante = atacante;
         this.defensor = defensor;
+        this.movimiento = movimiento;
     }
 
     @Override
@@ -28,8 +31,11 @@ public class ComandoAtacar implements ComandoTurno {
             return;
         }
 
-        int danoFinal = Math.max(1, pAtacante.getAtaque() - pDefensor.getDefensa());
-        core.events.GameEventManager.getInstance().notifyMessage("> " + pAtacante.getNombre() + " ataca a " + pDefensor.getNombre());
+        int danoBase = movimiento != null ? movimiento.getPotencia() : 40;
+        int danoFinal = Math.max(1, (pAtacante.getAtaque() + danoBase / 2) - pDefensor.getDefensa());
+        String nombreAtaque = movimiento != null ? movimiento.getNombre() : "Struggle";
+
+        core.events.GameEventManager.getInstance().notifyMessage("> " + pAtacante.getNombre() + " ataca a " + pDefensor.getNombre() + " usando " + nombreAtaque);
         core.events.GameEventManager.getInstance().notifyMessage("  Inflige " + danoFinal + " de dano.");
 
         pDefensor.recibirDano(danoFinal);
