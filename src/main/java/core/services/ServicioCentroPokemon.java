@@ -8,24 +8,24 @@ public class ServicioCentroPokemon {
 
     public void curarEquipoCompleto(Entrenador entrenador) {
         if (entrenador.getEquipo().isEmpty()) {
-            core.events.GameEventManager.getInstance().notifyMessage("\nNo tienes Pokemon en tu equipo para curar");
+            core.events.GameEventManager.getInstance().notifyMessage("\nSin Pkmn.");
             return;
         }
         
-        core.events.GameEventManager.getInstance().notifyMessage("\n[ CENTRO POKEMON ] Curar equipo: $" + COSTO_CURACION + " | Fondos: $" + entrenador.getDinero());
+        core.events.GameEventManager.getInstance().notifyMessage("\n[CENTRO POKEMON] Curar: $" + COSTO_CURACION + " | Dinero: $" + entrenador.getDinero());
         
         if (entrenador.getDinero() < COSTO_CURACION) {
-            core.events.GameEventManager.getInstance().notifyMessage("No tienes suficiente dinero.");
+            core.events.GameEventManager.getInstance().notifyMessage("Sin dinero.");
             return;
         }
 
         entrenador.gastarDinero(COSTO_CURACION);
-        core.events.GameEventManager.getInstance().notifyMessage("Restaurando la salud de tus Pokemon");
+        core.events.GameEventManager.getInstance().notifyMessage("Curando...");
         for(Pokemon p : entrenador.getEquipo()) {
             p.revivir(100); 
             p.curar(999);
         }
-        core.events.GameEventManager.getInstance().notifyMessage("Tu equipo esta sano.");
+        core.events.GameEventManager.getInstance().notifyMessage("Pkmn sanos.");
     }
 }
 

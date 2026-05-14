@@ -32,15 +32,15 @@ public class Entrenador {
     public void agregarPokemon(Pokemon nuevoPokemon) {
         if (this.equipo.size() < 6) {
             this.equipo.add(nuevoPokemon);
-            core.events.GameEventManager.getInstance().notifyMessage(nuevoPokemon.getNombre() + " se ha unido al equipo de " + this.nombre);
+            core.events.GameEventManager.getInstance().notifyMessage(nuevoPokemon.getNombre() + " en equipo.");
         } else {
             this.cajaPc.add(nuevoPokemon);
-            core.events.GameEventManager.getInstance().notifyMessage("El equipo esta lleno. " + nuevoPokemon.getNombre() + " ha sido enviado a la Caja PC.");
+            core.events.GameEventManager.getInstance().notifyMessage("Equipo lleno. " + nuevoPokemon.getNombre() + " a PC.");
         }
     }
 
     public void mostrarEquipo() {
-        core.events.GameEventManager.getInstance().notifyMessage("\n[ EQUIPO ]:");
+        core.events.GameEventManager.getInstance().notifyMessage("\n[EQUIPO]");
         if (equipo.isEmpty()) {
             core.events.GameEventManager.getInstance().notifyMessage("> Vacio.");
             return;
@@ -48,7 +48,7 @@ public class Entrenador {
         
         for (int i = 0; i < equipo.size(); i++) {
             Pokemon p = equipo.get(i);
-            String estado = p.isDebilitado() ? "[X]" : "[HP: " + p.getHpActual() + "/" + p.getHpMaximo() + "]";
+            String estado = p.isDebilitado() ? "[X]" : "[" + p.getHpActual() + "/" + p.getHpMaximo() + "]";
             core.events.GameEventManager.getInstance().notifyMessage((i + 1) + ". " + p.getNombre() + " " + estado);
         }
     }
@@ -56,7 +56,7 @@ public class Entrenador {
     public void ganarDinero(int cantidad) {
         if (cantidad > 0) {
             this.dinero += cantidad;
-            core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " ha ganado $" + cantidad + ". Total: $" + this.dinero);
+            core.events.GameEventManager.getInstance().notifyMessage("+$" + cantidad + " (Total: $" + this.dinero + ")");
         }
     }
 
@@ -65,14 +65,14 @@ public class Entrenador {
             this.dinero -= cantidad;
             return true;
         } else {
-            core.events.GameEventManager.getInstance().notifyMessage("Dinero insuficientes.");
+            core.events.GameEventManager.getInstance().notifyMessage("Sin dinero.");
             return false;
         }
     }
 
     public void agregarObjeto(Objeto objeto) {
         this.mochila.add(objeto);
-        core.events.GameEventManager.getInstance().notifyMessage("Se ha añadido un objeto a la mochila.");
+        core.events.GameEventManager.getInstance().notifyMessage("Objeto en mochila.");
     }
 
     public boolean tienePokemonVivos() {

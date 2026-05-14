@@ -5,7 +5,7 @@ import battle.command.ComandoTurno;
 public class MotorBatalla {
 
     public void ejecutarTurno(ComandoTurno cmdJugador, ComandoTurno cmdRival) {
-        core.events.GameEventManager.getInstance().notifyMessage("\n[ RESOLUCION ]");
+        core.events.GameEventManager.getInstance().notifyMessage("\n[RES]");
         
         if (cmdJugador.getPrioridad() >= cmdRival.getPrioridad()) {
             cmdJugador.ejecutar();

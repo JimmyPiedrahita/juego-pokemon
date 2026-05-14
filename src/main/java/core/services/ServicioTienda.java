@@ -25,8 +25,8 @@ public class ServicioTienda {
         boolean enTienda = true;
 
         while (enTienda) {
-            core.events.GameEventManager.getInstance().notifyMessage("\n[ TIENDA POKEMON ] Dinero: $" + jugador.getDinero());
-            core.events.GameEventManager.getInstance().notifyMessage("1. Pokeball ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball") + ") | 2. Pocion ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion") + ") | 3. Revivir ($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir") + ") | 4. Salir");
+            core.events.GameEventManager.getInstance().notifyMessage("\n[TIENDA] $" + jugador.getDinero());
+            core.events.GameEventManager.getInstance().notifyMessage("1.Pokeball($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball") + ") 2.Pocion($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion") + ") 3.Revivir($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir") + ") 4.Salir");
             System.out.print("> ");
 
             String opcion = scanner.nextLine();
@@ -35,26 +35,26 @@ public class ServicioTienda {
                 case "1":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball"))) {
                         jugador.agregarObjeto(fPokeball.entregarObjeto());
-                        core.events.GameEventManager.getInstance().notifyMessage("Compraste una Pokeball");
+                        core.events.GameEventManager.getInstance().notifyMessage("+1 Pokeball");
                     }
                     break;
                 case "2":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion"))) {
                         jugador.agregarObjeto(fPociones.entregarObjeto());
-                        core.events.GameEventManager.getInstance().notifyMessage("Compraste una Pocion");
+                        core.events.GameEventManager.getInstance().notifyMessage("+1 Pocion");
                     }
                     break;
                 case "3":
                     if (jugador.gastarDinero(ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir"))) {
                         jugador.agregarObjeto(fRevivir.entregarObjeto());
-                        core.events.GameEventManager.getInstance().notifyMessage("Compraste un Revivir");
+                        core.events.GameEventManager.getInstance().notifyMessage("+1 Revivir");
                     }
                     break;
                 case "4":
                     enTienda = false;
                     break;
                 default:
-                    core.events.GameEventManager.getInstance().notifyMessage("Opcion invalida.");
+                    core.events.GameEventManager.getInstance().notifyMessage("Invalido.");
             }
         }
     }

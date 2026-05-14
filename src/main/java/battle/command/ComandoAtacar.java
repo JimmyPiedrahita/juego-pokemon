@@ -32,16 +32,28 @@ public class ComandoAtacar implements ComandoTurno {
         }
 
         int danoBase = movimiento != null ? movimiento.getPotencia() : 40;
-        int danoFinal = Math.max(1, (pAtacante.getAtaque() + danoBase / 2) - pDefensor.getDefensa());
+        
+        // Formula de dano
+        int nivel = pAtacante.getNivel();
+        int ataque = pAtacante.getAtaque();
+        int defensa = pDefensor.getDefensa();
+        
+        int danoFinal = (int) (((((2.0 * nivel / 5.0) + 2.0) * danoBase * ((double)ataque / defensa)) / 50.0) + 2);
+        
+        if (danoBase == 0) {
+            danoFinal = 0; // Movimientos de estado que no hacen daño directo
+        }
+        danoFinal = Math.max(danoBase > 0 ? 1 : 0, danoFinal);
+
         String nombreAtaque = movimiento != null ? movimiento.getNombre() : "Struggle";
 
-        core.events.GameEventManager.getInstance().notifyMessage("> " + pAtacante.getNombre() + " ataca a " + pDefensor.getNombre() + " usando " + nombreAtaque);
-        core.events.GameEventManager.getInstance().notifyMessage("  Inflige " + danoFinal + " de dano.");
+        core.events.GameEventManager.getInstance().notifyMessage("> " + pAtacante.getNombre() + " usa " + nombreAtaque + " en " + pDefensor.getNombre());
+        core.events.GameEventManager.getInstance().notifyMessage("  Dano: " + danoFinal);
 
         pDefensor.recibirDano(danoFinal);
         
         if (pDefensor.isDebilitado()) {
-            pAtacante.registrarVictoria();
+            new core.services.ProgressionService().registrarVictoria(pAtacante);
         }
     }
 }

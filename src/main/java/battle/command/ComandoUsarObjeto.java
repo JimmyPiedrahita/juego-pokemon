@@ -19,7 +19,7 @@ public class ComandoUsarObjeto implements ComandoTurno {
 
     @Override
     public void ejecutar() {
-        core.events.GameEventManager.getInstance().notifyMessage("\n> Se ha usado el objeto " + objeto.getNombre() + " en " + objetivo.getNombre() + ".");
+        core.events.GameEventManager.getInstance().notifyMessage("\n> Uso " + objeto.getNombre() + " en " + objetivo.getNombre() + ".");
         objeto.usar(objetivo);
     }
 }

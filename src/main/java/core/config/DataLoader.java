@@ -13,14 +13,23 @@ import java.util.List;
 import java.util.Map;
 
 public class DataLoader {
-    private static Map<String, List<Movimiento>> movimientosPorTipo = new HashMap<>();
-    private static List<Map<String, String>> pokemonsBase = new ArrayList<>();
+    private static DataLoader instance;
+    private Map<String, List<Movimiento>> movimientosPorTipo = new HashMap<>();
+    private List<Map<String, String>> pokemonsBase = new ArrayList<>();
+    private List<Map<String, Object>> entrenadoresBase = new ArrayList<>();
 
-    static {
+    private DataLoader() {
         cargarDatos();
     }
 
-    private static void cargarDatos() {
+    public static synchronized DataLoader getInstance() {
+        if (instance == null) {
+            instance = new DataLoader();
+        }
+        return instance;
+    }
+
+    private void cargarDatos() {
         Gson gson = new Gson();
         try {
             // Cargar movimientos
@@ -37,16 +46,27 @@ public class DataLoader {
             pokemonsBase = gson.fromJson(pokemonsReader, tipoLista);
             if (pokemonsBase == null) pokemonsBase = new ArrayList<>();
 
+            // Cargar entrenadores
+            Reader entrenadoresReader = new InputStreamReader(
+                    DataLoader.class.getClassLoader().getResourceAsStream("entrenadores.json"));
+            Type tipoListaEntrenadores = new TypeToken<List<Map<String, Object>>>() {}.getType();
+            entrenadoresBase = gson.fromJson(entrenadoresReader, tipoListaEntrenadores);
+            if (entrenadoresBase == null) entrenadoresBase = new ArrayList<>();
+
         } catch (Exception e) {
             System.err.println("Error al cargar datos JSON: " + e.getMessage());
         }
     }
 
-    public static List<Movimiento> getMovimientosPorTipo(String tipo) {
+    public List<Movimiento> getMovimientosPorTipo(String tipo) {
         return movimientosPorTipo.getOrDefault(tipo, new ArrayList<>());
     }
 
-    public static List<Map<String, String>> getPokemonsBase() {
+    public List<Map<String, String>> getPokemonsBase() {
         return pokemonsBase;
+    }
+
+    public List<Map<String, Object>> getEntrenadoresBase() {
+        return entrenadoresBase;
     }
 }

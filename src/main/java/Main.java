@@ -11,9 +11,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("=================================");
-        System.out.println("   BIENVENIDO AL JUEGO POKEMON   ");
+        System.out.println("        JUEGO POKEMON            ");
         System.out.println("=================================");
-        System.out.print("Ingresa tu nombre de entrenador: ");
+        System.out.print("Nombre: ");
         String nombre = scanner.nextLine();
 
         // 1. Configuracion inicial del estado del juego

@@ -3,10 +3,8 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.config.ConfiguracionJuego;
-
 public class Pokemon {
-    // RF-06: Atributos definidos
+
     private String nombre;
     private String tipo;
     private int nivel;
@@ -30,10 +28,7 @@ public class Pokemon {
         this.defensa = builder.defensa;
         this.velocidad = builder.velocidad;
         this.estado = this.hpActual <= 0 ? new core.state.EstadoDebilitado() : new core.state.EstadoNormal();
-        
-        // Carga automática de movimientos según el tipo
-        List<Movimiento> movs = core.config.DataLoader.getMovimientosPorTipo(this.tipo);
-        this.movimientos = movs.size() > 4 ? movs.subList(0, 4) : new ArrayList<>(movs);
+        this.movimientos = builder.movimientos != null ? builder.movimientos : new ArrayList<>();
     }
 
     public static class PokemonBuilder {
@@ -45,6 +40,7 @@ public class Pokemon {
         private int ataque;
         private int defensa;
         private int velocidad;
+        private List<Movimiento> movimientos;
 
         public PokemonBuilder(String nombre) {
             this.nombre = nombre;
@@ -85,6 +81,11 @@ public class Pokemon {
             return this;
         }
 
+        public PokemonBuilder movimientos(List<Movimiento> movimientos) {
+            this.movimientos = movimientos;
+            return this;
+        }
+
         public Pokemon build() {
             return new Pokemon(this);
         }
@@ -92,41 +93,6 @@ public class Pokemon {
 
     public List<Movimiento> getMovimientos() {
         return movimientos;
-    }
-
-    public void registrarVictoria() {
-        if (!this.estado.isDebilitado()) {
-            subirNivel();
-        }
-    }
-
-    private void subirNivel() {
-        this.nivel++;
-        this.hpMaximo += ConfiguracionJuego.INCREMENTO_HP_NIVEL;
-        this.hpActual += ConfiguracionJuego.INCREMENTO_HP_NIVEL;
-        this.ataque += ConfiguracionJuego.INCREMENTO_STATS_NIVEL;
-        this.defensa += ConfiguracionJuego.INCREMENTO_STATS_NIVEL;
-        this.velocidad += ConfiguracionJuego.INCREMENTO_STATS_NIVEL;
-
-        core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " ha subido al nivel " + this.nivel);
-
-        // Evaluacion de condicion de evolucion
-        if (this.nivel == ConfiguracionJuego.NIVEL_EVOLUCION) {
-            evolucionar();
-        }
-    }
-
-    private void evolucionar() {
-        core.events.GameEventManager.getInstance().notifyMessage(this.nombre + " esta evolucionando...");
-        this.nombre = "Gran " + this.nombre;
-
-        this.hpMaximo += ConfiguracionJuego.INCREMENTO_HP_EVOLUCION;
-        this.hpActual += ConfiguracionJuego.INCREMENTO_HP_EVOLUCION;
-        this.ataque += ConfiguracionJuego.INCREMENTO_STATS_EVOLUCION;
-        this.defensa += ConfiguracionJuego.INCREMENTO_STATS_EVOLUCION;
-        this.velocidad += ConfiguracionJuego.INCREMENTO_STATS_EVOLUCION;
-
-        core.events.GameEventManager.getInstance().notifyMessage("Evolucion completada! Ahora es " + this.nombre);
     }
 
     public void recibirDano(int dano) {
@@ -147,6 +113,34 @@ public class Pokemon {
 
     public void setEstado(core.state.EstadoPokemon estado) {
         this.estado = estado;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public void setHpMaximo(int hpMaximo) {
+        this.hpMaximo = hpMaximo;
+    }
+
+    public void setAtaque(int ataque) {
+        this.ataque = ataque;
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
     }
 
     public String getNombre() {
