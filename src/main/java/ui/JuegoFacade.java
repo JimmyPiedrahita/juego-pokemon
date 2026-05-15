@@ -6,6 +6,7 @@ import core.services.ServicioBatalla;
 import core.services.ServicioCentroPokemon;
 import core.services.ServicioExploracion;
 import core.services.ServicioTienda;
+import core.services.ServicioPCEquipo;
 
 public class JuegoFacade {
     private Scanner scanner;
@@ -13,6 +14,7 @@ public class JuegoFacade {
     private ServicioCentroPokemon servicioCentroPokemon;
     private ServicioExploracion servicioExploracion;
     private ServicioTienda servicioTienda;
+    private ServicioPCEquipo servicioPCEquipo;
 
     public JuegoFacade() {
         this.scanner = new Scanner(System.in);
@@ -20,6 +22,7 @@ public class JuegoFacade {
         this.servicioCentroPokemon = new ServicioCentroPokemon();
         this.servicioExploracion = new ServicioExploracion(scanner);
         this.servicioTienda = new ServicioTienda(scanner);
+        this.servicioPCEquipo = new ServicioPCEquipo(scanner);
     }
 
     public void iniciarJuego(Entrenador jugador) {
@@ -28,7 +31,7 @@ public class JuegoFacade {
         System.out.println("Inicio: " + jugador.getNombre());
 
         while (jugando) {
-            System.out.println("\n[MENU] 1.Equipo 2.Batalla 3.Centro Pkmn 4.Tienda 5.Explorar 6.Salir");
+            System.out.println("\n[MENU] 1.Equipo 2.Batalla 3.Centro Pkmn 4.Tienda 5.Explorar 6.Mostrar PC 7.Gestionar Equipo 8.Salir");
             System.out.print("> ");
             
             String opcion = scanner.nextLine();
@@ -57,6 +60,12 @@ public class JuegoFacade {
                     servicioExploracion.explorar(jugador);
                     break;
                 case "6":
+                    servicioPCEquipo.mostrarCaja(jugador);
+                    break;
+                case "7":
+                    servicioPCEquipo.gestionarEquipo(jugador);
+                    break;
+                case "8":
                     jugando = false;
                     break;
                 default:
