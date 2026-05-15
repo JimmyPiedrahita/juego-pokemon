@@ -1,18 +1,18 @@
 package core.services;
 
-import java.util.Random;
+import java.security.SecureRandom;
 import battle.MotorBatalla;
 import core.Entrenador;
 import core.Pokemon;
 
 public class ServicioBatalla {
     private MotorBatalla motor;
-    private Random rand;
+    private SecureRandom rand;
     private battle.strategy.RivalStrategy rivalStrategy;
 
     public ServicioBatalla() {
         this.motor = new MotorBatalla();
-        this.rand = new Random();
+        this.rand = new SecureRandom();
         this.rivalStrategy = new battle.strategy.RandomRivalStrategy();
     }
 

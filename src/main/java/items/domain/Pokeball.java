@@ -1,12 +1,11 @@
 package items.domain;
 
-import java.util.Random;
-
+import java.security.SecureRandom;
 import core.Pokemon;
 
 public class Pokeball implements Objeto {
 
-        private static final Random RAND = new Random();
+        private static final SecureRandom RAND = new SecureRandom();
 
     @Override
     public void usar(Pokemon pokemon) {

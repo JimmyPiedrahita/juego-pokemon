@@ -6,14 +6,14 @@ import battle.command.ComandoCambiarPokemon;
 import core.Entrenador;
 import core.Movimiento;
 import core.Pokemon;
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 public class RandomRivalStrategy implements RivalStrategy {
-    private Random rand;
+    private SecureRandom rand;
 
     public RandomRivalStrategy() {
-        this.rand = new Random();
+        this.rand = new SecureRandom();
     }
 
     @Override

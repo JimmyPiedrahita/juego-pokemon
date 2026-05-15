@@ -3,16 +3,16 @@ package core.services;
 import core.Entrenador;
 import core.Pokemon;
 import items.domain.Objeto;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class ServicioExploracion {
     private Scanner scanner;
-    private Random rand;
+    private SecureRandom rand;
 
     public ServicioExploracion(Scanner scanner) {
         this.scanner = scanner;
-        this.rand = new Random();
+        this.rand = new SecureRandom();
     }
 
     public void explorar(Entrenador jugador) {

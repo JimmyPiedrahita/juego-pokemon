@@ -1,11 +1,11 @@
 package battle;
 
 import battle.command.ComandoTurno;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class MotorBatalla {
 
-    private Random random = new Random();
+    private SecureRandom random = new SecureRandom();
 
     public void ejecutarTurno(ComandoTurno cmdJugador, ComandoTurno cmdRival) {
         core.events.GameEventManager.getInstance().notifyMessage("\n[RES]");
