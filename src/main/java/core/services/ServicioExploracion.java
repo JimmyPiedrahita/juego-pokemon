@@ -25,7 +25,7 @@ public class ServicioExploracion {
         while (explorando) {
             core.events.GameEventManager.getInstance().notifyMessage("\n[ZONA]");
             core.events.GameEventManager.getInstance().notifyMessage("1.Lanzar PB 2.Salir");
-            System.out.print("> ");
+            core.events.GameEventManager.getInstance().notifyMessageInline("> ");
             String opcion = scanner.nextLine();
 
             if (opcion.equals("1")) {

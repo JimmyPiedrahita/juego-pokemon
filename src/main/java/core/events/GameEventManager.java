@@ -31,4 +31,10 @@ public class GameEventManager {
             listener.onMessage(mensaje);
         }
     }
+
+    public void notifyMessageInline(String mensaje) {
+        for (GameEventListener listener : listeners) {
+            listener.onMessageInline(mensaje);
+        }
+    }
 }

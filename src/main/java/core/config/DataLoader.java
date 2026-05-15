@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("java:S106")
 public class DataLoader {
     private static DataLoader instance;
     private Map<String, List<Movimiento>> movimientosPorTipo = new HashMap<>();

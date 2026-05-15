@@ -10,10 +10,10 @@ public class Main {
         GameEventManager.getInstance().subscribe(new ConsolaLogListener());
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("=================================");
-        System.out.println("        JUEGO POKEMON            ");
-        System.out.println("=================================");
-        System.out.print("Nombre: ");
+        GameEventManager.getInstance().notifyMessage("=================================");
+        GameEventManager.getInstance().notifyMessage("        JUEGO POKEMON            ");
+        GameEventManager.getInstance().notifyMessage("=================================");
+        GameEventManager.getInstance().notifyMessageInline("Nombre: ");
         String nombre = scanner.nextLine();
 
         // 1. Configuracion inicial del estado del juego

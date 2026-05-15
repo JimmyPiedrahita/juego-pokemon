@@ -32,7 +32,7 @@ public class BatallaConsolaView {
             Pokemon activoRival = rival.getPokemonActivo();
             Pokemon activoJugador = jugador.getPokemonActivo();
             GameEventManager.getInstance().notifyMessage("Riv: " + activoRival.getNombre() + " [" + activoRival.getHpActual() + "] | Tu: " + activoJugador.getNombre() + " [" + activoJugador.getHpActual() + "]");
-            System.out.print("1.Atacar 2.Mochila 3.Pkmn\n> ");
+            GameEventManager.getInstance().notifyMessageInline("1.Atacar 2.Mochila 3.Pkmn\n> ");
 
             String opcion = scanner.nextLine();
             battle.command.ComandoTurno cmdJugador = null;
@@ -41,15 +41,15 @@ public class BatallaConsolaView {
                 case "1":
                     java.util.List<Movimiento> movs = activoJugador.getMovimientos();
                     if (movs == null || movs.isEmpty()) {
-                        System.out.println("Sin mov.");
+                        GameEventManager.getInstance().notifyMessage("Sin mov.");
                         continue;
                     }
-                    System.out.println("Elige mov:");
+                    GameEventManager.getInstance().notifyMessage("Elige mov:");
                     for (int i = 0; i < movs.size(); i++) {
-                        System.out.println((i + 1) + ". " + movs.get(i).getNombre() + " (P: " + movs.get(i).getPotencia() + " T: " + movs.get(i).getTipo() + ")");
+                        GameEventManager.getInstance().notifyMessage((i + 1) + ". " + movs.get(i).getNombre() + " (P: " + movs.get(i).getPotencia() + " T: " + movs.get(i).getTipo() + ")");
                     }
-                    System.out.println((movs.size() + 1) + ". Cancelar");
-                    System.out.print("> ");
+                    GameEventManager.getInstance().notifyMessage((movs.size() + 1) + ". Cancelar");
+                    GameEventManager.getInstance().notifyMessageInline("> ");
                     String oppAtaque = scanner.nextLine();
                     int indiceAtaque = -1;
                     try {
@@ -106,10 +106,10 @@ public class BatallaConsolaView {
         java.util.List<String> nombresUnicos = new java.util.ArrayList<>(conteoObjetos.keySet());
         
         for (int i = 0; i < nombresUnicos.size(); i++) {
-            System.out.print((i + 1) + ". " + nombresUnicos.get(i) + " x" + conteoObjetos.get(nombresUnicos.get(i)) + " | ");
+            GameEventManager.getInstance().notifyMessageInline((i + 1) + ". " + nombresUnicos.get(i) + " x" + conteoObjetos.get(nombresUnicos.get(i)) + " | ");
         }
         GameEventManager.getInstance().notifyMessage("\n0. Cancelar");
-        System.out.print("> ");
+        GameEventManager.getInstance().notifyMessageInline("> ");
         
         try {
             int seleccion = Integer.parseInt(scanner.nextLine());
@@ -130,7 +130,7 @@ public class BatallaConsolaView {
                         GameEventManager.getInstance().notifyMessage((i + 1) + ". " + p.getNombre() + " " + estado);
                     }
                     GameEventManager.getInstance().notifyMessage("0. Cancelar");
-                    System.out.print("> ");
+                    GameEventManager.getInstance().notifyMessageInline("> ");
                     
                     int opc = Integer.parseInt(scanner.nextLine());
                     if (opc == 0) return null;
@@ -170,7 +170,7 @@ public class BatallaConsolaView {
             GameEventManager.getInstance().notifyMessage((i + 1) + ". " + p.getNombre() + " " + estado + marcaActual);
         }
         GameEventManager.getInstance().notifyMessage("0. Cancelar");
-        System.out.print("> ");
+        GameEventManager.getInstance().notifyMessageInline("> ");
         
         try {
             int opcion = Integer.parseInt(scanner.nextLine());

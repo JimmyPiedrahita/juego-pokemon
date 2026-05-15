@@ -27,7 +27,7 @@ public class ServicioTienda {
         while (enTienda) {
             core.events.GameEventManager.getInstance().notifyMessage("\n[TIENDA] $" + jugador.getDinero());
             core.events.GameEventManager.getInstance().notifyMessage("1.Pokeball($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pokeball") + ") 2.Pocion($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Pocion") + ") 3.Revivir($" + ConfiguracionJuego.PRECIOS_OBJETOS.get("Revivir") + ") 4.Salir");
-            System.out.print("> ");
+            core.events.GameEventManager.getInstance().notifyMessageInline("> ");
 
             String opcion = scanner.nextLine();
 

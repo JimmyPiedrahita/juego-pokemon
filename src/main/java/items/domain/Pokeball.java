@@ -6,14 +6,16 @@ import core.Pokemon;
 
 public class Pokeball implements Objeto {
 
+        private static final Random RAND = new Random();
+
     @Override
     public void usar(Pokemon pokemon) {
         core.events.GameEventManager.getInstance().notifyMessage("Lanzando Pokeball a " + pokemon.getNombre());
         
         // Probabilidad de captura basada en el daño recibido
-        double porcentajeSalud = (double) pokemon.getHpActual() / pokemon.getHpMaximo(); 
-        Random rand = new Random();
-        double probabilidad = rand.nextDouble(); 
+        double porcentajeSalud = (double) pokemon.getHpActual() / pokemon.getHpMaximo();
+
+        double probabilidad = RAND.nextDouble(); 
 
         double umbralExito = (porcentajeSalud < 0.5) ? 0.7 : 0.3;
 

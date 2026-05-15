@@ -30,7 +30,7 @@ public class ServicioPCEquipo {
         boolean gestionando = true;
         while (gestionando) {
             GameEventManager.getInstance().notifyMessage("\n[GESTIONAR EQUIPO] 1.Depositar a PC  2.Retirar de PC  3.Intercambiar  4.Volver");
-            System.out.print("> ");
+            GameEventManager.getInstance().notifyMessageInline("> ");
             String opc = scanner.nextLine();
 
             switch (opc) {
@@ -51,7 +51,7 @@ public class ServicioPCEquipo {
         }
         jugador.mostrarEquipo();
         GameEventManager.getInstance().notifyMessage("Elige el Pokemon a depositar (numero), 0 para cancelar:");
-        System.out.print("> ");
+        GameEventManager.getInstance().notifyMessageInline("> ");
         try {
             int index = Integer.parseInt(scanner.nextLine()) - 1;
             if (index >= 0 && index < equipo.size()) {
@@ -80,7 +80,7 @@ public class ServicioPCEquipo {
         }
         mostrarCaja(jugador);
         GameEventManager.getInstance().notifyMessage("Elige el Pokemon a retirar (numero), 0 para cancelar:");
-        System.out.print("> ");
+        GameEventManager.getInstance().notifyMessageInline("> ");
         try {
             int index = Integer.parseInt(scanner.nextLine()) - 1;
             if (index >= 0 && index < pc.size()) {
@@ -102,14 +102,14 @@ public class ServicioPCEquipo {
         }
         jugador.mostrarEquipo();
         GameEventManager.getInstance().notifyMessage("Elige el Pokemon del EQUIPO a cambiar (numero), 0 para cancelar:");
-        System.out.print("> ");
+        GameEventManager.getInstance().notifyMessageInline("> ");
         try {
             int indexEq = Integer.parseInt(scanner.nextLine()) - 1;
             if (indexEq < 0 || indexEq >= equipo.size()) return;
 
             mostrarCaja(jugador);
             GameEventManager.getInstance().notifyMessage("Elige el Pokemon de la PC a cambiar (numero), 0 para cancelar:");
-            System.out.print("> ");
+            GameEventManager.getInstance().notifyMessageInline("> ");
             int indexPc = Integer.parseInt(scanner.nextLine()) - 1;
             if (indexPc < 0 || indexPc >= pc.size()) return;
 

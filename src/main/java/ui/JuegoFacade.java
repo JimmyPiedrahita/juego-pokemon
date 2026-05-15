@@ -2,6 +2,7 @@ package ui;
 
 import java.util.Scanner;
 import core.Entrenador;
+import core.events.GameEventManager;
 import core.services.ServicioBatalla;
 import core.services.ServicioCentroPokemon;
 import core.services.ServicioExploracion;
@@ -28,11 +29,11 @@ public class JuegoFacade {
     public void iniciarJuego(Entrenador jugador) {
         boolean jugando = true;
         
-        System.out.println("Inicio: " + jugador.getNombre());
+        GameEventManager.getInstance().notifyMessage("Inicio: " + jugador.getNombre());
 
         while (jugando) {
-            System.out.println("\n[MENU] 1.Equipo 2.Batalla 3.Centro Pkmn 4.Tienda 5.Explorar 6.Mostrar PC 7.Gestionar Equipo 8.Salir");
-            System.out.print("> ");
+            GameEventManager.getInstance().notifyMessage("\n[MENU] 1.Equipo 2.Batalla 3.Centro Pkmn 4.Tienda 5.Explorar 6.Mostrar PC 7.Gestionar Equipo 8.Salir");
+            GameEventManager.getInstance().notifyMessageInline("> ");
             
             String opcion = scanner.nextLine();
             
@@ -42,10 +43,10 @@ public class JuegoFacade {
                     break;
                 case "2":
                     if (!jugador.tienePokemonVivos()) {
-                        System.out.println("Sin Pkmn vivos.");
+                        GameEventManager.getInstance().notifyMessage("Sin Pkmn vivos.");
                         break;
                     }
-                    System.out.println("Buscando rival...");
+                    GameEventManager.getInstance().notifyMessage("Buscando rival...");
                     Entrenador rival = servicioBatalla.generarEntrenadorRival(servicioExploracion);
                     BatallaConsolaView batallaView = new BatallaConsolaView(scanner, servicioBatalla);
                     batallaView.iniciarBatalla(jugador, rival);
@@ -69,7 +70,7 @@ public class JuegoFacade {
                     jugando = false;
                     break;
                 default:
-                    System.out.println("Opcion invalida.");
+                    GameEventManager.getInstance().notifyMessage("Opcion invalida.");
             }
         }
     }
