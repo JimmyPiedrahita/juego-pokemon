@@ -2,17 +2,13 @@ package items.domain;
 
 import core.Pokemon;
 
-public class Revivir implements Objeto {
+public class Revivir extends ObjetoBase {
     private int porcentajeRecuperacion = 50;
 
     @Override
-    public void usar(Pokemon pokemon) {
-        if (esAplicable(pokemon)) {
-            core.events.GameEventManager.getInstance().notifyMessage("Se revivio a " + pokemon.getNombre());
-            pokemon.revivir(porcentajeRecuperacion);
-        } else {
-            core.events.GameEventManager.getInstance().notifyMessage(getMensajeErrorAplicacion());
-        }
+    protected void aplicarEfecto(Pokemon pokemon) {
+        core.events.GameEventManager.getInstance().notifyMessage("Se revivio a " + pokemon.getNombre());
+        pokemon.revivir(porcentajeRecuperacion);
     }
 
     @Override

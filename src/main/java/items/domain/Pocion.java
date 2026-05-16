@@ -2,18 +2,14 @@ package items.domain;
 
 import core.Pokemon;
 
-public class Pocion implements Objeto{
+public class Pocion extends ObjetoBase {
     private int puntosCuracion = 20;
 
     @Override
-    public void usar(Pokemon pokemon) {
-        if (esAplicable(pokemon)) {
-            core.events.GameEventManager.getInstance().notifyMessage("Pocion usada en " + pokemon.getNombre());
-            pokemon.curar(puntosCuracion);
-            core.events.GameEventManager.getInstance().notifyMessage("Nueva cantidad de vida " + pokemon.getHpActual());
-        } else {
-            core.events.GameEventManager.getInstance().notifyMessage(getMensajeErrorAplicacion());
-        }
+    protected void aplicarEfecto(Pokemon pokemon) {
+        core.events.GameEventManager.getInstance().notifyMessage("Pocion usada en " + pokemon.getNombre());
+        pokemon.curar(puntosCuracion);
+        core.events.GameEventManager.getInstance().notifyMessage("Nueva cantidad de vida " + pokemon.getHpActual());
     }
 
     @Override

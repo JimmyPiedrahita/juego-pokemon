@@ -3,12 +3,12 @@ package items.domain;
 import java.security.SecureRandom;
 import core.Pokemon;
 
-public class Pokeball implements Objeto {
+public class Pokeball extends ObjetoBase {
 
         private static final SecureRandom RAND = new SecureRandom();
 
     @Override
-    public void usar(Pokemon pokemon) {
+    protected void aplicarEfecto(Pokemon pokemon) {
         core.events.GameEventManager.getInstance().notifyMessage("Lanzando Pokeball a " + pokemon.getNombre());
         
         // Probabilidad de captura basada en el daño recibido
