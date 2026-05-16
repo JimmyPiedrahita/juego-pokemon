@@ -4,6 +4,10 @@ import java.util.Map;
 
 public class ConfiguracionJuego {
 
+    private ConfiguracionJuego() {
+        throw new IllegalStateException("Clase utilitaria");
+    }
+
     // Precios de objetos en la tienda
     public static final Map<String, Integer> PRECIOS_OBJETOS = Map.of(
         "Pokeball", 50,

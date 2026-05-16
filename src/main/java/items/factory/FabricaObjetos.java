@@ -7,8 +7,7 @@ public abstract class FabricaObjetos {
     protected abstract Objeto creaObjeto();
 
     public Objeto entregarObjeto() {
-        Objeto nuevoObjeto = creaObjeto();
-        return nuevoObjeto;
+        return creaObjeto();
     }
 
 }

@@ -1,3 +1,4 @@
+package main;
 import java.util.Scanner;
 import core.Entrenador;
 import items.factory.FabricaPokeball;
@@ -5,8 +6,9 @@ import ui.InterfazConsola;
 import core.events.GameEventManager;
 import ui.ConsolaLogListener;
 
+@SuppressWarnings("java:S1172")
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         GameEventManager.getInstance().subscribe(new ConsolaLogListener());
 
         Scanner scanner = new Scanner(System.in);

@@ -8,6 +8,7 @@ import core.events.GameEventManager;
 
 public class ServicioPCEquipo {
     private Scanner scanner;
+    static final String OPCION_INVALIDA = "Opcion invalida.";
 
     public ServicioPCEquipo(Scanner scanner) {
         this.scanner = scanner;
@@ -38,7 +39,7 @@ public class ServicioPCEquipo {
                 case "2": retirar(jugador); break;
                 case "3": intercambiar(jugador); break;
                 case "4": gestionando = false; break;
-                default: GameEventManager.getInstance().notifyMessage("Opcion invalida.");
+                default: GameEventManager.getInstance().notifyMessage(OPCION_INVALIDA);
             }
         }
     }
@@ -62,8 +63,8 @@ public class ServicioPCEquipo {
                     jugador.setPokemonActivo(equipo.get(0));
                 }
             }
-        } catch (NumberFormatException e) {
-            GameEventManager.getInstance().notifyMessage("Opcion invalida.");
+        } catch (NumberFormatException _) {
+            GameEventManager.getInstance().notifyMessage(OPCION_INVALIDA);
         }
     }
 
@@ -88,8 +89,8 @@ public class ServicioPCEquipo {
                 equipo.add(p);
                 GameEventManager.getInstance().notifyMessage(p.getNombre() + " se unio a tu equipo.");
             }
-        } catch (NumberFormatException e) {
-            GameEventManager.getInstance().notifyMessage("Opcion invalida.");
+        } catch (NumberFormatException _) {
+            GameEventManager.getInstance().notifyMessage(OPCION_INVALIDA);
         }
     }
 
@@ -123,8 +124,8 @@ public class ServicioPCEquipo {
             if (jugador.getPokemonActivo() == pEquipo) {
                 jugador.setPokemonActivo(pPc);
             }
-        } catch (NumberFormatException e) {
-            GameEventManager.getInstance().notifyMessage("Opcion invalida.");
+        } catch (NumberFormatException _) {
+            GameEventManager.getInstance().notifyMessage(OPCION_INVALIDA);
         }
     }
 }
