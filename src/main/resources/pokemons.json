@@ -1,0 +1,12 @@
+[
+  { "nombre": "Pikachu", "tipo": "Electrico", "hp": "35", "ataque": "55", "defensa": "40", "velocidad": "90" },
+  { "nombre": "Gastly", "tipo": "Fantasma", "hp": "30", "ataque": "35", "defensa": "30", "velocidad": "80" },
+  { "nombre": "Rattata", "tipo": "Normal", "hp": "30", "ataque": "56", "defensa": "35", "velocidad": "72" },
+  { "nombre": "Caterpie", "tipo": "Bicho", "hp": "45", "ataque": "30", "defensa": "35", "velocidad": "45" },
+  { "nombre": "Weedle", "tipo": "Veneno", "hp": "40", "ataque": "35", "defensa": "30", "velocidad": "50" },
+  { "nombre": "Meowth", "tipo": "Normal", "hp": "40", "ataque": "45", "defensa": "35", "velocidad": "90" },
+  { "nombre": "Zubat", "tipo": "Veneno", "hp": "40", "ataque": "45", "defensa": "35", "velocidad": "55" },
+  { "nombre": "Squirtle", "tipo": "Agua", "hp": "44", "ataque": "48", "defensa": "65", "velocidad": "43" },
+  { "nombre": "Charmander", "tipo": "Fuego", "hp": "39", "ataque": "52", "defensa": "43", "velocidad": "65" },
+  { "nombre": "Bulbasaur", "tipo": "Planta", "hp": "45", "ataque": "49", "defensa": "49", "velocidad": "45" }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "nombre": "Gary",
+    "clase": "Rival",
+    "recompensaMin": 100,
+    "recompensaMax": 200
+  },
+  {
+    "nombre": "Red",
+    "clase": "Maestro",
+    "recompensaMin": 500,
+    "recompensaMax": 1000
+  },
+  {
+    "nombre": "Blue",
+    "clase": "Rival",
+    "recompensaMin": 100,
+    "recompensaMax": 200
+  },
+  {
+    "nombre": "Ash",
+    "clase": "Entrenador",
+    "recompensaMin": 50,
+    "recompensaMax": 100
+  },
+  {
+    "nombre": "Misty",
+    "clase": "Líder de Gimnasio",
+    "recompensaMin": 200,
+    "recompensaMax": 400
+  },
+  {
+    "nombre": "Brock",
+    "clase": "Líder de Gimnasio",
+    "recompensaMin": 200,
+    "recompensaMax": 400
+  }
+]

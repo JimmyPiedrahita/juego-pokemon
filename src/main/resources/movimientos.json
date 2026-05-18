@@ -1,0 +1,50 @@
+{
+  "Electrico": [
+    {"nombre": "Impactrueno", "potencia": 40, "tipo": "Electrico"},
+    {"nombre": "Rayo", "potencia": 90, "tipo": "Electrico"},
+    {"nombre": "Trueno", "potencia": 110, "tipo": "Electrico"},
+    {"nombre": "Ataque Rapido", "potencia": 40, "tipo": "Normal"}
+  ],
+  "Agua": [
+    {"nombre": "Pistola Agua", "potencia": 40, "tipo": "Agua"},
+    {"nombre": "Burbuja", "potencia": 40, "tipo": "Agua"},
+    {"nombre": "Hidrobomba", "potencia": 110, "tipo": "Agua"},
+    {"nombre": "Placaje", "potencia": 40, "tipo": "Normal"}
+  ],
+  "Fuego": [
+    {"nombre": "Ascuas", "potencia": 40, "tipo": "Fuego"},
+    {"nombre": "Lanzallamas", "potencia": 90, "tipo": "Fuego"},
+    {"nombre": "Llamarada", "potencia": 110, "tipo": "Fuego"},
+    {"nombre": "Aranazo", "potencia": 40, "tipo": "Normal"}
+  ],
+  "Planta": [
+    {"nombre": "Latigo Cepa", "potencia": 45, "tipo": "Planta"},
+    {"nombre": "Hoja Afilada", "potencia": 55, "tipo": "Planta"},
+    {"nombre": "Rayo Solar", "potencia": 120, "tipo": "Planta"},
+    {"nombre": "Placaje", "potencia": 40, "tipo": "Normal"}
+  ],
+  "Fantasma": [
+    {"nombre": "Lenguetazo", "potencia": 30, "tipo": "Fantasma"},
+    {"nombre": "Bola Sombra", "potencia": 80, "tipo": "Fantasma"},
+    {"nombre": "Tinieblas", "potencia": 0, "tipo": "Fantasma"},
+    {"nombre": "Rayo Confuso", "potencia": 0, "tipo": "Fantasma"}
+  ],
+  "Normal": [
+    {"nombre": "Placaje", "potencia": 40, "tipo": "Normal"},
+    {"nombre": "Ataque Rapido", "potencia": 40, "tipo": "Normal"},
+    {"nombre": "Aranazo", "potencia": 40, "tipo": "Normal"},
+    {"nombre": "Golpe Cuerpo", "potencia": 85, "tipo": "Normal"}
+  ],
+  "Bicho": [
+    {"nombre": "Picotazo", "potencia": 35, "tipo": "Normal"},
+    {"nombre": "Disparo Demora", "potencia": 0, "tipo": "Bicho"},
+    {"nombre": "Doble Rayo", "potencia": 25, "tipo": "Bicho"},
+    {"nombre": "Pin Misil", "potencia": 25, "tipo": "Bicho"}
+  ],
+  "Veneno": [
+    {"nombre": "Picotazo Venenoso", "potencia": 15, "tipo": "Veneno"},
+    {"nombre": "Acido", "potencia": 40, "tipo": "Veneno"},
+    {"nombre": "Polucion", "potencia": 65, "tipo": "Veneno"},
+    {"nombre": "Bomba Lodo", "potencia": 90, "tipo": "Veneno"}
+  ]
+}
